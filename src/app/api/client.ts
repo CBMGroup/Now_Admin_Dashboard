@@ -119,6 +119,20 @@ class ApiClient {
     }
 
     const { access, refresh } = await response.json();
+
+    // Verify admin privileges by making a test request to an admin-only endpoint
+    const testRes = await fetch(`${BASE_URL}/users/`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${access}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!testRes.ok) {
+      throw new Error('Superuser or Staff privileges are required to access the admin panel.');
+    }
+
     localStorage.setItem('access_token', access);
     localStorage.setItem('refresh_token', refresh);
     return { access, refresh };
