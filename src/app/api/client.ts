@@ -1,5 +1,5 @@
-const BASE_URL = 'http://localhost:8000/api/v1';
-const AUTH_URL = 'http://localhost:8000/api/token/';
+const BASE_URL = 'https://api.cbmgroupco.com/api/v1';
+const AUTH_URL = 'https://api.cbmgroupco.com/api/token/';
 
 class ApiClient {
   private getToken() {
@@ -30,7 +30,7 @@ class ApiClient {
       const refresh = localStorage.getItem('refresh_token');
       if (refresh) {
         try {
-          const refreshRes = await fetch('http://localhost:8000/api/token/refresh/', {
+          const refreshRes = await fetch('https://api.cbmgroupco.com/api/token/refresh/', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh }),
