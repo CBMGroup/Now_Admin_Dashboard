@@ -17,7 +17,7 @@ type User = {
   name: string;
   email: string;
   avatar: string;
-  role: 'Free' | 'Premium' | 'Creator' | 'Admin';
+  role: 'Free' | 'Premium' | 'Student' | 'Admin';
   status: boolean;
   joinedDate: string;
 };
@@ -25,7 +25,7 @@ type User = {
 const roleColors: Record<string, string> = {
   Free: 'bg-[#A3A3A3] text-white',
   Premium: 'bg-[#8B5CF6] text-white',
-  Creator: 'bg-[#22C55E] text-white',
+  Student: 'bg-[#3B82F6] text-white',
   Admin: 'bg-[#F59E0B] text-white',
 };
 
