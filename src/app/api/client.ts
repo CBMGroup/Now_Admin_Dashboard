@@ -1,13 +1,24 @@
-const BASE_URL = 'https://api.cbmgroupco.com/api/v1';
-const AUTH_URL = 'https://api.cbmgroupco.com/api/token/';
+const API_URL = import.meta.env.VITE_API_URL || 'https://api.cbmgroupco.com';
+const BASE_URL = `${API_URL}/api/v1`;
+const AUTH_URL = `${API_URL}/api/token/`;
 
 class ApiClient {
   private getToken() {
     return localStorage.getItem('access_token');
   }
 
+  private normalizeEndpoint(endpoint: string) {
+    // Ensure endpoint starts with / and ends with / for Django
+    let url = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    if (!url.endsWith('/')) {
+      url = `${url}/`;
+    }
+    return url;
+  }
+
   async request(endpoint: string, options: RequestInit = {}) {
     const token = this.getToken();
+    const normalizedEndpoint = this.normalizeEndpoint(endpoint);
     
     // Default headers
     const headers: Record<string, string> = {
@@ -20,7 +31,7 @@ class ApiClient {
       headers['Content-Type'] = 'application/json';
     }
 
-    let response = await fetch(`${BASE_URL}${endpoint}`, {
+    let response = await fetch(`${BASE_URL}${normalizedEndpoint}`, {
       ...options,
       headers,
     });
@@ -30,7 +41,7 @@ class ApiClient {
       const refresh = localStorage.getItem('refresh_token');
       if (refresh) {
         try {
-          const refreshRes = await fetch('https://api.cbmgroupco.com/api/token/refresh/', {
+          const refreshRes = await fetch(`${API_URL}/api/token/refresh/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refresh }),
@@ -42,7 +53,7 @@ class ApiClient {
             
             // Retry original request
             headers['Authorization'] = `Bearer ${access}`;
-            response = await fetch(`${BASE_URL}${endpoint}`, {
+            response = await fetch(`${BASE_URL}${normalizedEndpoint}`, {
               ...options,
               headers,
             });

@@ -39,13 +39,13 @@ export function Users() {
 
   const fetchUsers = async () => {
     try {
-      const users = await api.get('/users/');
-      setData(users.map((u: any) => ({
+      const res = await api.get('/users/');
+      setData(res.map((u: any) => ({
         id: u.id.toString(),
         name: u.username,
         email: u.email,
-        avatar: u.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`,
-        role: u.is_staff ? 'Admin' : (u.is_creator ? 'Creator' : (u.is_premium ? 'Premium' : 'Free')),
+        avatar: u.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`,
+        role: u.role ? (u.role.charAt(0).toUpperCase() + u.role.slice(1)) : 'Free',
         status: u.is_active,
         joinedDate: u.date_joined,
       })));
