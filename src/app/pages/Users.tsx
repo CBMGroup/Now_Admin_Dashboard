@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { api } from '../api/client';
+import { api, resolveMediaUrl } from '../api/client';
 import {
   useReactTable,
   getCoreRowModel,
@@ -44,8 +44,8 @@ export function Users() {
         id: u.id.toString(),
         name: u.username,
         email: u.email,
-        avatar: u.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`,
-        role: u.is_staff ? 'Admin' : (u.is_creator ? 'Creator' : (u.is_premium ? 'Premium' : 'Free')),
+        avatar: resolveMediaUrl(u.avatar || u.avatar_url) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`,
+        role: u.role ? (u.role.charAt(0).toUpperCase() + u.role.slice(1)) : 'Free',
         status: u.is_active,
         joinedDate: u.date_joined,
       })));

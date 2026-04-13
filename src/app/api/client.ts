@@ -1,5 +1,13 @@
 const BASE_URL = 'https://api.cbmgroupco.com/api/v1';
 const AUTH_URL = 'https://api.cbmgroupco.com/api/token/';
+const MEDIA_BASE_URL = 'https://api.cbmgroupco.com';
+
+export const resolveMediaUrl = (path: string | null | undefined): string => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  const cleanPath = path.startsWith('/') ? path : `/${path}`;
+  return `${MEDIA_BASE_URL}${cleanPath}`;
+};
 
 class ApiClient {
   private getToken() {

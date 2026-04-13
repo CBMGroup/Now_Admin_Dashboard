@@ -166,7 +166,16 @@ export function Dashboard() {
   );
 }
 
-function KPICard({ title, value, change, trend, icon: Icon, color }: any) {
+interface KPICardProps {
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  icon: any;
+  color: 'purple' | 'green' | 'blue' | 'orange';
+}
+
+function KPICard({ title, value, change, trend, icon: Icon, color }: KPICardProps) {
   const colorClasses = {
     purple: 'from-[#8B5CF6] to-[#6D28D9]',
     green: 'from-[#22C55E] to-[#16A34A]',

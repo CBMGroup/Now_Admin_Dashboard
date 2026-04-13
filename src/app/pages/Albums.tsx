@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Grid, List, Plus, Edit, Trash2, Play, Loader2 } from 'lucide-react';
-import { api } from '../api/client';
+import { api, resolveMediaUrl } from '../api/client';
 import { AlbumModal, Album as AlbumType } from '../components/AlbumModal';
 
 // Extend the basic AlbumType for view capabilities (like track aggregates)
@@ -126,7 +126,7 @@ export function Albums() {
             >
               <div className="relative aspect-square overflow-hidden">
                 <img
-                  src={album.cover || album.cover_url || 'https://api.dicebear.com/7.x/initials/svg?seed=Album'}
+                  src={resolveMediaUrl(album.cover || album.cover_url) || 'https://api.dicebear.com/7.x/initials/svg?seed=Album'}
                   alt={album.title}
                   className="w-full h-full object-cover transition-transform group-hover:scale-110"
                 />
@@ -196,7 +196,7 @@ export function Albums() {
                 >
                   <td className="px-4 py-4">
                     <img
-                      src={album.cover || album.cover_url || 'https://api.dicebear.com/7.x/initials/svg?seed=Album'}
+                      src={resolveMediaUrl(album.cover || album.cover_url) || 'https://api.dicebear.com/7.x/initials/svg?seed=Album'}
                       alt={album.title}
                       className="w-12 h-12 rounded-lg object-cover"
                     />
