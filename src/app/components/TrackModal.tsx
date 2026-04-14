@@ -19,7 +19,7 @@ type Track = {
 interface TrackModalProps {
   track: Track | null;
   onClose: () => void;
-  onSave: (trackData: any) => void;
+  onSave: (trackData: any) => Promise<void>;
 }
 
 const CATEGORIES = ['Music', 'Podcast', 'Education', 'Radio', 'Ugandan Music', 'Audiobooks'];
@@ -27,6 +27,7 @@ const CATEGORIES = ['Music', 'Podcast', 'Education', 'Radio', 'Ugandan Music', '
 export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
   const [artists, setArtists] = useState<any[]>([]);
   const [isLoadingArtists, setIsLoadingArtists] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [formData, setFormData] = useState({
     title: track?.title || '',
     artist_name: track?.artist || '',
@@ -65,7 +66,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
     fetchArtists();
   }, [track]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // If we have a file or we are creating a new track, we should likely use FormData
@@ -95,7 +96,12 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
     
     // If no new file is added, and it's an edit, we can still send FormData. 
     // The backend knows to ignore file fields if they aren't provided.
-    onSave(payload);
+    setIsSaving(true);
+    try {
+      await onSave(payload);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -310,15 +316,24 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 bg-[#2A2A2A] hover:bg-[#333333] text-[#F1F1F1] rounded-xl font-bold transition-all flex-1"
+              disabled={isSaving}
+              className="px-6 py-3 bg-[#2A2A2A] hover:bg-[#333333] text-[#F1F1F1] rounded-xl font-bold transition-all flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:from-[#7C3AED] hover:to-[#6D28D9] text-white rounded-xl font-bold transition-all shadow-xl shadow-purple-500/20 flex-1"
+              disabled={isSaving}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:from-[#7C3AED] hover:to-[#6D28D9] text-white rounded-xl font-bold transition-all shadow-xl shadow-purple-500/20 flex-1 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {track ? 'Update Track' : 'Create Track'}
+              {isSaving ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  {track ? 'Updating...' : 'Creating...'}
+                </>
+              ) : (
+                track ? 'Update Track' : 'Create Track'
+              )}
             </button>
           </div>
         </form>
