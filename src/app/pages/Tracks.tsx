@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
-import { api, resolveMediaUrl } from '../api/client';
+import { api } from '../api/client';
 import {
   useReactTable,
   getCoreRowModel,
@@ -228,6 +228,12 @@ export function Tracks() {
     }),
   ];
 
+  const filteredData = data.filter((track) => {
+    if (selectedCategory !== 'All' && track.category !== selectedCategory) return false;
+    if (selectedArtist !== 'All' && track.artist !== selectedArtist) return false;
+    return true;
+  });
+
   const table = useReactTable({
     data: filteredData,
     columns,
@@ -240,12 +246,6 @@ export function Tracks() {
         pageSize: 10,
       },
     },
-  });
-
-  const filteredData = data.filter((track) => {
-    if (selectedCategory !== 'All' && track.category !== selectedCategory) return false;
-    if (selectedArtist !== 'All' && track.artist !== selectedArtist) return false;
-    return true;
   });
 
   const uniqueArtists = ['All', ...new Set(data.map(t => t.artist))];
