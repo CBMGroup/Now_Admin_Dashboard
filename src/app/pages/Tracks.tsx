@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router';
-import { api } from '../api/client';
+import { api, resolveMediaUrl } from '../api/client';
 import {
   useReactTable,
   getCoreRowModel,
