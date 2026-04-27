@@ -17,7 +17,7 @@ type User = {
   name: string;
   email: string;
   avatar: string;
-  role: 'Free' | 'Premium' | 'Creator' | 'Admin';
+  role: 'Free' | 'Premium' | 'Student' | 'Admin';
   status: boolean;
   joinedDate: string;
 };
@@ -25,7 +25,7 @@ type User = {
 const roleColors: Record<string, string> = {
   Free: 'bg-[#A3A3A3] text-white',
   Premium: 'bg-[#8B5CF6] text-white',
-  Creator: 'bg-[#22C55E] text-white',
+  Student: 'bg-[#3B82F6] text-white',
   Admin: 'bg-[#F59E0B] text-white',
 };
 
@@ -39,12 +39,12 @@ export function Users() {
 
   const fetchUsers = async () => {
     try {
-      const users = await api.get('/users/');
-      setData(users.map((u: any) => ({
+      const res = await api.get('/users/');
+      setData(res.map((u: any) => ({
         id: u.id.toString(),
         name: u.username,
         email: u.email,
-        avatar: resolveMediaUrl(u.avatar || u.avatar_url) || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`,
+        avatar: u.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`,
         role: u.role ? (u.role.charAt(0).toUpperCase() + u.role.slice(1)) : 'Free',
         status: u.is_active,
         joinedDate: u.date_joined,

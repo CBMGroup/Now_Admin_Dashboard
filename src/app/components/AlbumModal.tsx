@@ -171,7 +171,7 @@ export function AlbumModal({ album, onClose, onSave, isSaving }: AlbumModalProps
                 </select>
                 {isLoadingArtists && (
                   <div className="absolute right-3 top-3.5">
-                    <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6]" />
+                    <Loader2 className="w-5 h-5 animate-spin text-[#00D1C1]" />
                   </div>
                 )}
               </div>
@@ -200,7 +200,7 @@ export function AlbumModal({ album, onClose, onSave, isSaving }: AlbumModalProps
                     value={selectedFile ? 'Using uploaded file' : formData.cover_url}
                     disabled={!!selectedFile}
                     onChange={(e) => setFormData({ ...formData, cover_url: e.target.value })}
-                    className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] placeholder:text-[#404040] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] placeholder:text-[#404040] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] transition-all disabled:opacity-50"
                     placeholder="https://example.com/cover.jpg"
                 />
             </div>
@@ -220,7 +220,7 @@ export function AlbumModal({ album, onClose, onSave, isSaving }: AlbumModalProps
             <button
               type="submit"
               disabled={isSaving || !formData.title || !formData.artist}
-              className="px-6 py-3 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:from-[#7C3AED] hover:to-[#6D28D9] text-white rounded-xl font-bold transition-all shadow-xl shadow-purple-500/20 flex-1 flex justify-center items-center gap-2 disabled:opacity-50"
+              className="px-6 py-3 bg-gradient-to-r from-[#00D1C1] to-[#00B8A9] hover:from-[#00B8A9] hover:to-[#00A093] text-black rounded-xl font-bold transition-all shadow-xl shadow-teal-500/20 flex-1 flex justify-center items-center gap-2 disabled:opacity-50"
             >
               {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : null}
               {album ? 'Update Album' : 'Create Album'}

@@ -41,8 +41,8 @@ export function Artists() {
       // Map potential backend array to local array (adding dummy counts if none exist)
       setData(res.map((a: any) => ({
         ...a,
-        tracksCount: a.tracksCount || 0,
-        albumsCount: a.albumsCount || 0
+        tracksCount: a.tracks_count || 0,
+        albumsCount: a.albums_count || 0
       })));
     } catch (error) {
       console.error('Failed to fetch artists:', error);

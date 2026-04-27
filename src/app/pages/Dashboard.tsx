@@ -99,8 +99,8 @@ export function Dashboard() {
           <div className="space-y-4">
             {stats.recent_activity.map((activity: any) => (
               <div key={activity.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#0A0A0A] transition-colors group">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold text-white">{activity.user.charAt(0)}</span>
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#00D1C1] to-[#00B8A9] flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-bold text-black">{activity.user.charAt(0)}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[#F1F1F1] text-sm">
@@ -184,7 +184,7 @@ function KPICard({ title, value, change, trend, icon: Icon, color }: KPICardProp
   };
 
   return (
-    <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6 hover:border-[#8B5CF6]/50 transition-all hover:shadow-lg hover:shadow-purple-500/10">
+    <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6 hover:border-[#00D1C1]/50 transition-all hover:shadow-lg hover:shadow-teal-500/10">
       <div className="flex items-start justify-between mb-4">
         <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${colorClasses[color]} flex items-center justify-center shadow-lg`}>
           <Icon className="w-6 h-6 text-white" />
