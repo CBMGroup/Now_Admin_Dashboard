@@ -1,32 +1,47 @@
 import { createBrowserRouter } from "react-router";
 import { RootLayout } from "./components/RootLayout";
-import { Dashboard } from "./pages/Dashboard";
-import { Tracks } from "./pages/Tracks";
-import { Users } from "./pages/Users";
-import { Artists } from "./pages/Artists";
-import { Albums } from "./pages/Albums";
-import { Playlists } from "./pages/Playlists";
-import { Analytics } from "./pages/Analytics";
-import { Settings } from "./pages/Settings";
-import { Login } from "./pages/Login";
 
 export const router = createBrowserRouter([
   {
     path: "/login",
-    Component: Login,
+    lazy: () => import("./pages/Login").then(m => ({ Component: m.Login })),
   },
   {
     path: "/",
     Component: RootLayout,
     children: [
-      { index: true, Component: Dashboard },
-      { path: "users", Component: Users },
-      { path: "artists", Component: Artists },
-      { path: "albums", Component: Albums },
-      { path: "tracks", Component: Tracks },
-      { path: "playlists", Component: Playlists },
-      { path: "analytics", Component: Analytics },
-      { path: "settings", Component: Settings },
+      { 
+        index: true, 
+        lazy: () => import("./pages/Dashboard").then(m => ({ Component: m.Dashboard })) 
+      },
+      { 
+        path: "users", 
+        lazy: () => import("./pages/Users").then(m => ({ Component: m.Users })) 
+      },
+      { 
+        path: "artists", 
+        lazy: () => import("./pages/Artists").then(m => ({ Component: m.Artists })) 
+      },
+      { 
+        path: "albums", 
+        lazy: () => import("./pages/Albums").then(m => ({ Component: m.Albums })) 
+      },
+      { 
+        path: "tracks", 
+        lazy: () => import("./pages/Tracks").then(m => ({ Component: m.Tracks })) 
+      },
+      { 
+        path: "playlists", 
+        lazy: () => import("./pages/Playlists").then(m => ({ Component: m.Playlists })) 
+      },
+      { 
+        path: "analytics", 
+        lazy: () => import("./pages/Analytics").then(m => ({ Component: m.Analytics })) 
+      },
+      { 
+        path: "settings", 
+        lazy: () => import("./pages/Settings").then(m => ({ Component: m.Settings })) 
+      },
     ],
   },
 ]);
