@@ -33,11 +33,11 @@ export function Login() {
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
 
         <div className="text-center relative z-10">
-          <div className="mx-auto h-16 w-16 bg-gradient-to-br from-purple-600 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg transform rotate-12 mb-6">
-            <Music2 className="h-10 w-10 text-white -rotate-12" />
+          <div className="mx-auto h-16 w-16 bg-[#00D1C1] rounded-2xl flex items-center justify-center shadow-lg transform rotate-12 mb-6">
+            <Music2 className="h-10 w-10 text-black -rotate-12" />
           </div>
-          <h2 className="text-3xl font-extrabold text-white tracking-tight">NowPlay Admin</h2>
-          <p className="mt-2 text-sm text-[#A3A3A3]">Management Dashboard Login</p>
+          <h2 className="text-3xl font-extrabold text-white tracking-tight">Nowplay Admin</h2>
+          <p className="mt-2 text-sm text-[#A3A3A3]">Management Secure Login</p>
         </div>
 
         <form className="mt-8 space-y-6 relative z-10" onSubmit={handleSubmit}>
@@ -58,7 +58,7 @@ export function Login() {
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="block w-full pl-11 pr-4 py-3.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-white placeholder-[#525252] focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-purple-600 transition-all"
+                className="block w-full pl-11 pr-4 py-3.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-white placeholder-[#525252] focus:outline-none focus:ring-2 focus:ring-[#00D1C1]/50 focus:border-[#00D1C1] transition-all"
                 placeholder="Username"
               />
             </div>
@@ -71,7 +71,7 @@ export function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="block w-full pl-11 pr-4 py-3.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-white placeholder-[#525252] focus:outline-none focus:ring-2 focus:ring-purple-600/50 focus:border-purple-600 transition-all"
+                className="block w-full pl-11 pr-4 py-3.5 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-white placeholder-[#525252] focus:outline-none focus:ring-2 focus:ring-[#00D1C1]/50 focus:border-[#00D1C1] transition-all"
                 placeholder="Password"
               />
             </div>
@@ -80,7 +80,7 @@ export function Login() {
           <button
             type="submit"
             disabled={isLoading}
-            className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-600 transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
+            className="group relative w-full flex justify-center py-4 px-4 border border-transparent text-sm font-bold rounded-xl text-black bg-[#00D1C1] hover:bg-[#00B8A9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00D1C1] transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
           >
             {isLoading ? (
               <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

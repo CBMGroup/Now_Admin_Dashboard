@@ -96,7 +96,7 @@ export function Albums() {
           </div>
           <button 
              onClick={() => setIsModalOpen(true)}
-             className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20"
+             className="px-4 py-2 bg-[#00D1C1] hover:bg-[#00B8A9] text-black rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-teal-500/20"
           >
             <Plus className="w-5 h-5" />
             Add Album
@@ -122,7 +122,7 @@ export function Albums() {
           {albums.map((album) => (
             <div
               key={album.id}
-              className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden hover:border-[#8B5CF6]/50 transition-all hover:shadow-lg hover:shadow-purple-500/10 group"
+              className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden hover:border-[#00D1C1]/50 transition-all hover:shadow-lg hover:shadow-teal-500/10 group"
             >
               <div className="relative aspect-square overflow-hidden">
                 <img

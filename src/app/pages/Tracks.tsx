@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { api } from '../api/client';
+import { useSearchParams } from 'react-router';
+import { api, resolveMediaUrl } from '../api/client';
 import {
   useReactTable,
   getCoreRowModel,
@@ -42,25 +43,28 @@ type Track = {
   audio_file?: string;
 };
 
-const categories = ['All', 'Music', 'Podcast', 'Education', 'Radio', 'Ugandan Music', 'Audiobooks'];
+const categories = ['All', 'Music', 'Podcast', 'Education', 'Radio', 'Ugandan Music', 'Audiobooks', 'Poems', 'Audio Plays'];
 
 const categoryColors: Record<string, string> = {
-  'Music': 'bg-[#8B5CF6] text-white',
+  'Music': 'bg-[#00D1C1] text-black',
   'Podcast': 'bg-[#22C55E] text-white',
   'Education': 'bg-[#EF4444] text-white',
   'Radio': 'bg-[#F59E0B] text-white',
   'Ugandan Music': 'bg-[#3B82F6] text-white',
   'Audiobooks': 'bg-[#EC4899] text-white',
+  'Poems': 'bg-[#8b5cf6] text-white',
+  'Audio Plays': 'bg-[#f43f5e] text-white',
 };
 
 const columnHelper = createColumnHelper<Track>();
 
 export function Tracks() {
   const [data, setData] = useState<Track[]>([]);
+  const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showFilters, setShowFilters] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [showFilters, setShowFilters] = useState(searchParams.get('category') ? true : false);
+  const [selectedCategory, setSelectedCategory] = useState(searchParams.get('category') || 'All');
   const [selectedArtist, setSelectedArtist] = useState('All');
   const { setCurrentTrack } = usePlayer();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -225,7 +229,7 @@ export function Tracks() {
   ];
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -249,7 +253,7 @@ export function Tracks() {
   if (isLoading) {
     return (
       <div className="h-[80vh] flex flex-col items-center justify-center text-[#A3A3A3] space-y-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#8B5CF6]" />
+        <Loader2 className="w-10 h-10 animate-spin text-[#00D1C1]" />
         <p className="text-lg font-medium">Loading music library...</p>
       </div>
     );
@@ -281,7 +285,7 @@ export function Tracks() {
             setEditingTrack(null);
             setIsModalOpen(true);
           }}
-          className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20"
+          className="px-4 py-2 bg-[#00D1C1] hover:bg-[#00B8A9] text-black rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-teal-500/20"
         >
           <Plus className="w-5 h-5" />
           Add Track
@@ -403,9 +407,9 @@ export function Tracks() {
             Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{' '}
             {Math.min(
               (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-              data.length
+              filteredData.length
             )}{' '}
-            of {data.length} tracks
+            of {filteredData.length} tracks
           </p>
           <div className="flex items-center gap-2">
             <button

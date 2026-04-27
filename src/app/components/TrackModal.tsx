@@ -24,7 +24,7 @@ interface TrackModalProps {
   onSave: (trackData: any) => void;
 }
 
-const CATEGORIES = ['Music', 'Podcast', 'Education', 'Radio', 'Ugandan Music', 'Audiobooks'];
+const CATEGORIES = ['Music', 'Podcast', 'Education', 'Radio', 'Ugandan Music', 'Audiobooks', 'Poems', 'Audio Plays'];
 
 export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
   const [artists, setArtists] = useState<any[]>([]);
@@ -179,13 +179,13 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
               onDrop={handleDrop}
               className={`border-2 border-dashed rounded-xl p-8 transition-all ${
                 isDragging
-                  ? 'border-[#8B5CF6] bg-[#8B5CF6]/10 scale-[0.99]'
-                  : 'border-[#2A2A2A] hover:border-[#8B5CF6]/50'
+                  ? 'border-[#00D1C1] bg-[#00D1C1]/10 scale-[0.99]'
+                  : 'border-[#2A2A2A] hover:border-[#00D1C1]/50'
               }`}
             >
               <div className="flex flex-col items-center gap-3 text-center">
-                <div className="w-16 h-16 rounded-full bg-[#8B5CF6]/10 flex items-center justify-center mb-1">
-                  <Upload className="w-8 h-8 text-[#8B5CF6]" />
+                <div className="w-20 h-20 rounded-full bg-[#00D1C1]/10 flex items-center justify-center mb-2">
+                  <Upload className="w-10 h-10 text-[#00D1C1]" />
                 </div>
                 <div>
                   <p className="text-[#F1F1F1] font-semibold">
@@ -224,7 +224,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
                 required
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] placeholder:text-[#404040] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] transition-all"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] placeholder:text-[#404040] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] focus:border-transparent transition-all"
                 placeholder="e.g. Midnight City"
               />
             </div>
@@ -239,7 +239,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
                   required
                   value={formData.artist}
                   onChange={(e) => setFormData({ ...formData, artist: e.target.value })}
-                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] appearance-none disabled:opacity-50"
+                  className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] appearance-none disabled:opacity-50"
                   disabled={isLoadingArtists}
                 >
                   <option value="">Select an artist</option>
@@ -251,7 +251,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
                 </select>
                 {isLoadingArtists && (
                   <div className="absolute right-3 top-3.5">
-                    <Loader2 className="w-5 h-5 animate-spin text-[#8B5CF6]" />
+                    <Loader2 className="w-5 h-5 animate-spin text-[#00D1C1]" />
                   </div>
                 )}
               </div>
@@ -293,7 +293,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
                 required
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] appearance-none"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] appearance-none"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -374,7 +374,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
             </button>
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:from-[#7C3AED] hover:to-[#6D28D9] text-white rounded-xl font-bold transition-all shadow-xl shadow-purple-500/20 flex-1"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00D1C1] to-[#00B8A9] hover:from-[#00B8A9] hover:to-[#00A093] text-black rounded-xl font-bold transition-all shadow-xl shadow-teal-500/20 flex-1"
             >
               {track ? 'Update Track' : 'Create Track'}
             </button>

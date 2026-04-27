@@ -19,6 +19,7 @@ const navItems = [
   { path: '/artists', label: 'Artists', icon: Mic2 },
   { path: '/albums', label: 'Albums', icon: Disc3 },
   { path: '/tracks', label: 'Tracks', icon: Music2 },
+  { path: '/tracks?category=Podcast', label: 'Podcasts', icon: Radio },
   { path: '/playlists', label: 'Playlists', icon: ListMusic },
   { path: '/analytics', label: 'Analytics & Streams', icon: BarChart3 },
   { path: '/settings', label: 'Settings', icon: Settings },
@@ -32,12 +33,11 @@ export function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-[#2A2A2A]">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] rounded-lg flex items-center justify-center shadow-lg shadow-purple-500/20">
-            <Radio className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 bg-[#00D1C1] rounded-lg flex items-center justify-center shadow-lg shadow-teal-500/20">
+            <Radio className="w-5 h-5 text-black" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-[#F1F1F1]">NowPlay</h1>
-            <p className="text-xs text-[#A3A3A3]">Admin Panel</p>
+            <h1 className="text-lg font-bold text-[#F1F1F1]">Nowplay Admin</h1>
           </div>
         </Link>
       </div>
@@ -56,7 +56,7 @@ export function Sidebar() {
                   className={`
                     flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all relative group
                     ${isActive 
-                      ? 'bg-[#8B5CF6] text-white shadow-lg shadow-purple-500/20' 
+                      ? 'bg-[#00D1C1] text-black shadow-lg shadow-teal-500/20' 
                       : 'text-[#A3A3A3] hover:bg-[#1A1A1A] hover:text-[#F1F1F1]'
                     }
                   `}
