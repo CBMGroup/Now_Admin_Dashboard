@@ -31,6 +31,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
   const [albums, setAlbums] = useState<any[]>([]);
   const [isLoadingArtists, setIsLoadingArtists] = useState(false);
   const [isLoadingAlbums, setIsLoadingAlbums] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   
   const [formData, setFormData] = useState({
     title: track?.title || '',
@@ -111,7 +112,12 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
       payload.append('cover', selectedCoverFile);
     }
     
-    onSave(payload);
+    setIsSaving(true);
+    try {
+      await onSave(payload);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
