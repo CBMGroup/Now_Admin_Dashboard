@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { api } from '../api/client';
+import { api, resolveMediaUrl } from '../api/client';
 import {
   useReactTable,
   getCoreRowModel,

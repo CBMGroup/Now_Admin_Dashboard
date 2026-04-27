@@ -83,8 +83,8 @@ export function Tracks() {
         plays: t.plays || 0,
         trend: 'up',
         trendValue: '+0%',
-        cover: t.cover || t.cover_url || 'https://images.unsplash.com/photo-1618336215696-6673cf4549ae?w=100',
-        audio_file: t.audio_file,
+        cover: resolveMediaUrl(t.cover || t.cover_url) || 'https://images.unsplash.com/photo-1618336215696-6673cf4549ae?w=100',
+        audio_file: resolveMediaUrl(t.audio_file),
       })));
     } catch (err: any) {
       setError(err.message || 'Failed to fetch tracks');

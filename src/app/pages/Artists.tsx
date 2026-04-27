@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-table';
 import { Search, Edit, Eye, UserPlus, CheckCircle2, ChevronLeft, ChevronRight, Trash2, Loader2 } from 'lucide-react';
 import * as Switch from '@radix-ui/react-switch';
-import { api } from '../api/client';
+import { api, resolveMediaUrl } from '../api/client';
 import { ArtistModal, Artist as ArtistType } from '../components/ArtistModal';
 
 // Extend the basic ArtistType for the table view
@@ -86,7 +86,7 @@ export function Artists() {
     columnHelper.accessor('avatar_url', {
       header: '',
       cell: (info) => {
-        const url = info.row.original.avatar || info.getValue() || 'https://api.dicebear.com/7.x/avataaars/svg?seed=fallback';
+        const url = resolveMediaUrl(info.row.original.avatar || info.getValue()) || 'https://api.dicebear.com/7.x/avataaars/svg?seed=fallback';
         return (
           <img
             src={url as string}
