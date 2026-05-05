@@ -9,7 +9,11 @@ import {
   BarChart3, 
   Settings,
   Radio,
-  LogOut
+  LogOut,
+  BookOpen,
+  Theater,
+  Feather,
+  Mic
 } from 'lucide-react';
 import { api } from '../api/client';
 
@@ -18,8 +22,11 @@ const navItems = [
   { path: '/users', label: 'Users', icon: Users },
   { path: '/artists', label: 'Artists', icon: Mic2 },
   { path: '/albums', label: 'Albums', icon: Disc3 },
-  { path: '/tracks', label: 'Tracks', icon: Music2 },
-  { path: '/tracks?category=Podcast', label: 'Podcasts', icon: Radio },
+  { path: '/tracks', label: 'All Media', icon: Music2 },
+  { path: '/podcasts', label: 'Podcasts', icon: Mic },
+  { path: '/audio-books', label: 'Audio Books', icon: BookOpen },
+  { path: '/audio-plays', label: 'Audio Plays', icon: Theater },
+  { path: '/poems', label: 'Poems', icon: Feather },
   { path: '/playlists', label: 'Playlists', icon: ListMusic },
   { path: '/analytics', label: 'Analytics & Streams', icon: BarChart3 },
   { path: '/settings', label: 'Settings', icon: Settings },
