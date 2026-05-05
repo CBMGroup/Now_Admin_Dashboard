@@ -100,6 +100,34 @@ export function Users() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <div>
+                <Skeleton className="h-9 w-48 mb-2" />
+                <Skeleton className="h-4 w-72" />
+            </div>
+            <Skeleton className="h-10 w-32" />
+        </div>
+        <Skeleton className="h-16 w-full rounded-xl" />
+        <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="p-4 border-b border-[#2A2A2A] flex items-center gap-4">
+                    <Skeleton className="h-10 w-10 rounded-full" />
+                    <div className="flex-1 space-y-2">
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-3 w-1/6" />
+                    </div>
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-20" />
+                </div>
+            ))}
+        </div>
+      </div>
+    );
+  }
+
   const columns = [
     columnHelper.accessor('avatar', {
       header: '',

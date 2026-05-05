@@ -3,6 +3,8 @@ import { Plus, Edit, Trash2, Lock, Globe, Loader2, Music2, AlertCircle } from 'l
 import { api } from '../api/client';
 import { PlaylistModal, Playlist } from '../components/PlaylistModal';
 
+import { Skeleton } from '../components/ui/skeleton';
+
 export function Playlists() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +23,36 @@ export function Playlists() {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <div>
+                <Skeleton className="h-9 w-48 mb-2" />
+                <Skeleton className="h-4 w-72" />
+            </div>
+            <Skeleton className="h-10 w-32" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden">
+                <Skeleton className="h-48 w-full" />
+                <div className="p-5 space-y-3">
+                    <Skeleton className="h-5 w-3/4" />
+                    <Skeleton className="h-4 w-1/2" />
+                    <Skeleton className="h-12 w-full" />
+                    <div className="flex gap-3 pt-4">
+                        <Skeleton className="h-9 flex-1" />
+                        <Skeleton className="h-9 flex-1" />
+                    </div>
+                </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     fetchPlaylists();

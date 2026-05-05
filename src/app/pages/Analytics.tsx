@@ -5,6 +5,8 @@ import { TrendingUp, Users, Music2, Play, Download, Loader2, AlertCircle } from 
 
 const COLORS = ['#8B5CF6', '#22C55E', '#EF4444', '#F59E0B', '#3B82F6', '#EC4899', '#06B6D4'];
 
+import { Skeleton } from '../components/ui/skeleton';
+
 export function Analytics() {
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,9 +28,26 @@ export function Analytics() {
 
   if (isLoading) {
     return (
-      <div className="h-[80vh] flex flex-col items-center justify-center text-[#A3A3A3] space-y-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#8B5CF6]" />
-        <p className="text-lg font-medium animate-pulse">Analyzing platform data...</p>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <div>
+                <Skeleton className="h-9 w-48 mb-2" />
+                <Skeleton className="h-4 w-72" />
+            </div>
+            <Skeleton className="h-10 w-32" />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Skeleton className="h-[400px] w-full rounded-xl" />
+          <Skeleton className="h-[400px] w-full rounded-xl" />
+        </div>
+        <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+            <Skeleton className="h-6 w-48 mb-6" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[1, 2, 3].map((i) => (
+                    <Skeleton key={i} className="h-24 w-full rounded-lg" />
+                ))}
+            </div>
+        </div>
       </div>
     );
   }

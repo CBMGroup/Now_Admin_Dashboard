@@ -8,6 +8,8 @@ type Album = AlbumType & {
   tracksCount: number;
 };
 
+import { Skeleton } from '../components/ui/skeleton';
+
 export function Albums() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -35,6 +37,34 @@ export function Albums() {
       setIsLoading(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <div>
+                <Skeleton className="h-9 w-48 mb-2" />
+                <Skeleton className="h-4 w-72" />
+            </div>
+            <div className="flex gap-3">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-32" />
+            </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+            <div key={i} className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden">
+                <Skeleton className="aspect-square w-full" />
+                <div className="p-4 space-y-2">
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-3 w-1/2" />
+                </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const handleSaveAlbum = async (formData: FormData) => {
     setIsSaving(true);
