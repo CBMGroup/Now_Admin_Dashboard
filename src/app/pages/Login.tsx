@@ -33,9 +33,11 @@ export function Login() {
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
 
         <div className="text-center relative z-10">
-          <div className="mx-auto h-16 w-16 bg-[#00D1C1] rounded-2xl flex items-center justify-center shadow-lg transform rotate-12 mb-6">
-            <Music2 className="h-10 w-10 text-black -rotate-12" />
-          </div>
+          <img 
+            src="/assets/nwplay3.jpeg" 
+            alt="NowPlay" 
+            className="mx-auto h-20 w-20 rounded-2xl shadow-2xl mb-6 object-cover border-2 border-[#00D1C1]/20"
+          />
           <h2 className="text-3xl font-extrabold text-white tracking-tight">Nowplay Admin</h2>
           <p className="mt-2 text-sm text-[#A3A3A3]">Management Secure Login</p>
         </div>

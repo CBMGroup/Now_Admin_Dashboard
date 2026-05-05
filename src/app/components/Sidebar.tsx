@@ -40,9 +40,11 @@ export function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-[#2A2A2A]">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-[#00D1C1] rounded-lg flex items-center justify-center shadow-lg shadow-teal-500/20">
-            <Radio className="w-5 h-5 text-black" />
-          </div>
+          <img 
+            src="/assets/nwplay3.jpeg" 
+            alt="NowPlay" 
+            className="w-12 h-12 rounded-xl shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform duration-300 object-cover"
+          />
           <div>
             <h1 className="text-lg font-bold text-[#F1F1F1]">Nowplay Admin</h1>
           </div>
