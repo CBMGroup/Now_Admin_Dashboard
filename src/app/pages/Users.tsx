@@ -44,7 +44,8 @@ export function Users() {
   const fetchUsers = async () => {
     try {
       const res = await api.get('/users/');
-      setData((Array.isArray(res) ? res : []).map((u: any) => ({
+      const users = Array.isArray(res) ? res : (res.results || []);
+      setData(users.map((u: any) => ({
         id: u.id.toString(),
         name: u.username,
         email: u.email,

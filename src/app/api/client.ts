@@ -8,9 +8,11 @@ class ApiClient {
   }
 
   private normalizeEndpoint(endpoint: string) {
-    // Ensure endpoint starts with / and ends with / for Django
+    // Ensure endpoint starts with /
     let url = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-    if (!url.endsWith('/')) {
+    
+    // For Django, ensure paths end with / ONLY if there are no query parameters
+    if (!url.includes('?') && !url.endsWith('/')) {
       url = `${url}/`;
     }
     return url;
