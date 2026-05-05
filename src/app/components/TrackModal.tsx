@@ -82,10 +82,14 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
       setIsLoadingArtists(true);
       setIsLoadingAlbums(true);
       try {
-        const [artistsData, albumsData] = await Promise.all([
+        const [artistsRes, albumsRes] = await Promise.all([
           api.get('/artists/'),
           api.get('/albums/')
         ]);
+        
+        const artistsData = Array.isArray(artistsRes) ? artistsRes : (artistsRes.results || []);
+        const albumsData = Array.isArray(albumsRes) ? albumsRes : (albumsRes.results || []);
+        
         setArtists(artistsData);
         setAlbums(albumsData);
         

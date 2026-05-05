@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 import { api, resolveMediaUrl } from '../api/client';
 import {
@@ -124,8 +124,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
     }
   };
 
-
-  const columns = [
+  const columns = useMemo(() => [
     columnHelper.display({
       id: 'play',
       header: '',
@@ -241,12 +240,12 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
       ),
       size: 100,
     }),
-  ];
+  ], [category, setCurrentTrack, handleDelete]);
 
-  const filteredData = data.filter((track) => {
+  const filteredData = useMemo(() => data.filter((track) => {
     if (selectedArtist !== 'All' && track.artist !== selectedArtist) return false;
     return true;
-  });
+  }), [data, selectedArtist]);
 
   const table = useReactTable({
     data: filteredData,
@@ -262,7 +261,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
     },
   });
 
-  const uniqueArtists = ['All', ...new Set(data.map(t => t.artist))];
+  const uniqueArtists = useMemo(() => ['All', ...new Set(data.map(t => t.artist))], [data]);
 
   if (isLoading) {
     return (
