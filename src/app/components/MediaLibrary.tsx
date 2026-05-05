@@ -298,7 +298,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
           className="px-4 py-2 bg-[#00D1C1] hover:bg-[#00B8A9] text-black rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-teal-500/20"
         >
           <Plus className="w-5 h-5" />
-          Add Item
+          Add {category === 'All' ? 'Item' : category.endsWith('s') ? category.slice(0, -1) : category}
         </button>
       </div>
 

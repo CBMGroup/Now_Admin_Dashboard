@@ -49,6 +49,27 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
     is_explicit: track?.is_explicit || false,
   });
 
+  const getItemTypeLabel = () => {
+    switch (formData.category) {
+      case 'Podcast': return 'Podcast Episode';
+      case 'Audiobooks': return 'Audiobook';
+      case 'Poems': return 'Poem';
+      case 'Audio Plays': return 'Audio Play';
+      case 'Education': return 'Educational Content';
+      case 'Radio': return 'Radio Segment';
+      default: return 'Track';
+    }
+  };
+
+  const getCreatorLabel = () => {
+    switch (formData.category) {
+      case 'Podcast': return 'Host';
+      case 'Audiobooks': return 'Author';
+      case 'Poems': return 'Poet';
+      default: return 'Artist';
+    }
+  };
+
   const [isDragging, setIsDragging] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -172,7 +193,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#2A2A2A] sticky top-0 bg-[#1A1A1A] z-10">
           <h2 className="text-2xl font-bold text-[#F1F1F1]">
-            {track ? 'Edit Track' : 'Add New Track'}
+            {track ? `Edit ${getItemTypeLabel()}` : `Add New ${getItemTypeLabel()}`}
           </h2>
           <button
             onClick={onClose}
@@ -233,7 +254,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
             {/* Title */}
             <div className="col-span-full">
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
-                Track Title
+                {getItemTypeLabel()} Title
               </label>
               <input
                 type="text"
@@ -248,7 +269,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
             {/* Artist Selection */}
             <div>
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
-                {formData.category === 'Podcast' ? 'Host' : formData.category === 'Audiobooks' ? 'Author' : formData.category === 'Poems' ? 'Poet' : 'Artist'}
+                {getCreatorLabel()}
               </label>
               <div className="relative">
                 <select
@@ -440,7 +461,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
                   {track ? 'Updating...' : 'Creating...'}
                 </>
               ) : (
-                track ? 'Update Track' : 'Create Track'
+                track ? `Update ${getItemTypeLabel()}` : `Create ${getItemTypeLabel()}`
               )}
             </button>
           </div>
