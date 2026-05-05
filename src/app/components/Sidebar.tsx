@@ -9,7 +9,11 @@ import {
   BarChart3, 
   Settings,
   Radio,
-  LogOut
+  LogOut,
+  BookOpen,
+  Theater,
+  Feather,
+  Mic
 } from 'lucide-react';
 import { api } from '../api/client';
 
@@ -18,8 +22,11 @@ const navItems = [
   { path: '/users', label: 'Users', icon: Users },
   { path: '/artists', label: 'Artists', icon: Mic2 },
   { path: '/albums', label: 'Albums', icon: Disc3 },
-  { path: '/tracks', label: 'Tracks', icon: Music2 },
-  { path: '/tracks?category=Podcast', label: 'Podcasts', icon: Radio },
+  { path: '/tracks', label: 'All Media', icon: Music2 },
+  { path: '/podcasts', label: 'Podcasts', icon: Mic },
+  { path: '/audio-books', label: 'Audio Books', icon: BookOpen },
+  { path: '/audio-plays', label: 'Audio Plays', icon: Theater },
+  { path: '/poems', label: 'Poems', icon: Feather },
   { path: '/playlists', label: 'Playlists', icon: ListMusic },
   { path: '/analytics', label: 'Analytics & Streams', icon: BarChart3 },
   { path: '/settings', label: 'Settings', icon: Settings },
@@ -33,9 +40,11 @@ export function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-[#2A2A2A]">
         <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-[#00D1C1] rounded-lg flex items-center justify-center shadow-lg shadow-teal-500/20">
-            <Radio className="w-5 h-5 text-black" />
-          </div>
+          <img 
+            src="/assets/nwplay3.jpeg" 
+            alt="NowPlay" 
+            className="w-12 h-12 rounded-xl shadow-lg shadow-teal-500/20 group-hover:scale-105 transition-transform duration-300 object-cover"
+          />
           <div>
             <h1 className="text-lg font-bold text-[#F1F1F1]">Nowplay Admin</h1>
           </div>

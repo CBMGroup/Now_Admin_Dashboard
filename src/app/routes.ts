@@ -31,6 +31,22 @@ export const router = createBrowserRouter([
         lazy: () => import("./pages/Tracks").then(m => ({ Component: m.Tracks })) 
       },
       { 
+        path: "podcasts", 
+        lazy: () => import("./pages/Podcasts").then(m => ({ Component: m.Podcasts })) 
+      },
+      { 
+        path: "audio-books", 
+        lazy: () => import("./pages/AudioBooks").then(m => ({ Component: m.AudioBooks })) 
+      },
+      { 
+        path: "audio-plays", 
+        lazy: () => import("./pages/AudioPlays").then(m => ({ Component: m.AudioPlays })) 
+      },
+      { 
+        path: "poems", 
+        lazy: () => import("./pages/Poems").then(m => ({ Component: m.Poems })) 
+      },
+      { 
         path: "playlists", 
         lazy: () => import("./pages/Playlists").then(m => ({ Component: m.Playlists })) 
       },

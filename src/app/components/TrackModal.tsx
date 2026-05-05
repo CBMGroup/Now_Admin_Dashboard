@@ -16,6 +16,9 @@ type Track = {
   trendValue: string;
   cover: string;
   audio_file?: string;
+  description?: string;
+  language?: string;
+  is_explicit?: boolean;
 };
 
 interface TrackModalProps {
@@ -41,6 +44,9 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
     duration: track?.duration?.toString() || '180',
     cover_url: track?.cover || '',
     audio_file: track?.audio_file || '',
+    description: track?.description || '',
+    language: track?.language || '',
+    is_explicit: track?.is_explicit || false,
   });
 
   const [isDragging, setIsDragging] = useState(false);
@@ -111,6 +117,10 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
     if (selectedCoverFile) {
       payload.append('cover', selectedCoverFile);
     }
+    
+    payload.append('description', formData.description);
+    payload.append('language', formData.language);
+    payload.append('is_explicit', formData.is_explicit.toString());
     
     setIsSaving(true);
     try {
@@ -238,7 +248,7 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
             {/* Artist Selection */}
             <div>
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
-                Artist
+                {formData.category === 'Podcast' ? 'Host' : formData.category === 'Audiobooks' ? 'Author' : formData.category === 'Poems' ? 'Poet' : 'Artist'}
               </label>
               <div className="relative">
                 <select
@@ -319,8 +329,49 @@ export function TrackModal({ track, onClose, onSave }: TrackModalProps) {
                 required
                 value={formData.duration}
                 onChange={(e) => setFormData({ ...formData, duration: e.target.value })}
-                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] transition-all"
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] transition-all"
                 placeholder="180"
+              />
+            </div>
+
+            {/* Language */}
+            <div>
+              <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
+                Language
+              </label>
+              <input
+                type="text"
+                value={formData.language}
+                onChange={(e) => setFormData({ ...formData, language: e.target.value })}
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] transition-all"
+                placeholder="e.g. English"
+              />
+            </div>
+
+            {/* Explicit Content */}
+            <div className="flex items-center gap-3">
+              <input
+                type="checkbox"
+                id="is_explicit"
+                checked={formData.is_explicit}
+                onChange={(e) => setFormData({ ...formData, is_explicit: e.target.checked })}
+                className="w-5 h-5 rounded border-[#2A2A2A] bg-[#0A0A0A] text-[#00D1C1] focus:ring-[#00D1C1]"
+              />
+              <label htmlFor="is_explicit" className="text-sm font-medium text-[#F1F1F1]">
+                Explicit Content
+              </label>
+            </div>
+
+            {/* Description */}
+            <div className="col-span-full">
+              <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
+                Description
+              </label>
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:outline-none focus:ring-2 focus:ring-[#00D1C1] transition-all min-h-[100px]"
+                placeholder="Enter a description for this content..."
               />
             </div>
 
