@@ -4,6 +4,8 @@ import { api } from '../api/client';
 import { Users, Music2, BarChart3, Mic2, TrendingUp, TrendingDown, Play, Heart, Upload, AlertCircle, Loader2, Plus, UserPlus, Disc3 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
+import { Skeleton } from '../components/ui/skeleton';
+
 export function Dashboard() {
   const [stats, setStats] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,9 +27,24 @@ export function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="h-[80vh] flex flex-col items-center justify-center text-[#A3A3A3] space-y-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#8B5CF6]" />
-        <p className="text-lg font-medium animate-pulse">Fetching latest stats...</p>
+      <div className="space-y-6">
+        <div>
+          <Skeleton className="h-9 w-48 mb-2" />
+          <Skeleton className="h-4 w-72" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <Skeleton key={i} className="h-32 w-full rounded-xl" />
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <Skeleton className="h-[400px] w-full rounded-xl" />
+          </div>
+          <Skeleton className="h-[400px] w-full rounded-xl" />
+        </div>
       </div>
     );
   }

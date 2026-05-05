@@ -121,6 +121,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
     }
   };
 
+
   const columns = [
     columnHelper.display({
       id: 'play',
@@ -262,9 +263,28 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
 
   if (isLoading) {
     return (
-      <div className="h-[80vh] flex flex-col items-center justify-center text-[#A3A3A3] space-y-4">
-        <Loader2 className="w-10 h-10 animate-spin text-[#00D1C1]" />
-        <p className="text-lg font-medium">Loading {title.toLowerCase()}...</p>
+      <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <div>
+                <Skeleton className="h-9 w-48 mb-2" />
+                <Skeleton className="h-4 w-72" />
+            </div>
+            <Skeleton className="h-10 w-32" />
+        </div>
+        <Skeleton className="h-16 w-full rounded-xl" />
+        <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] overflow-hidden">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="p-4 border-b border-[#2A2A2A] flex items-center gap-4">
+                    <Skeleton className="h-12 w-12 rounded-lg" />
+                    <div className="flex-1 space-y-2">
+                        <Skeleton className="h-4 w-1/4" />
+                        <Skeleton className="h-3 w-1/6" />
+                    </div>
+                    <Skeleton className="h-4 w-20" />
+                    <Skeleton className="h-4 w-20" />
+                </div>
+            ))}
+        </div>
       </div>
     );
   }

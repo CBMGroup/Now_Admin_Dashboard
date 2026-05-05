@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { RootLayout } from "./components/RootLayout";
+import { AuthGuard } from "./components/AuthGuard";
+import React from "react";
 
 export const router = createBrowserRouter([
   {
@@ -8,7 +10,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/",
-    Component: RootLayout,
+    element: React.createElement(AuthGuard, null, React.createElement(RootLayout)),
     children: [
       { 
         index: true, 
