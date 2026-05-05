@@ -6,7 +6,7 @@ type Track = {
   title: string;
   artist: string;
   cover: string;
-  audio_file?: string;
+  audio_file: string | null;
 };
 
 interface MiniPlayerProps {

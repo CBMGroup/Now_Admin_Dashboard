@@ -146,7 +146,7 @@ export function Dashboard() {
         <div className="lg:col-span-2 bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
           <h2 className="text-xl font-bold text-[#F1F1F1] mb-6">Recent Activity</h2>
           <div className="space-y-4">
-            {stats.recent_activity.map((activity: any) => (
+            {(stats?.recent_activity || []).map((activity: any) => (
               <div key={activity.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#0A0A0A] transition-colors group">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#00D1C1] to-[#00B8A9] flex items-center justify-center flex-shrink-0">
                   <span className="text-sm font-bold text-black">{activity.user.charAt(0)}</span>
@@ -177,7 +177,7 @@ export function Dashboard() {
         <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
           <h2 className="text-xl font-bold text-[#F1F1F1] mb-6">Top 5 Tracks</h2>
           <div className="space-y-4">
-            {stats.top_tracks.map((track: any, index: number) => (
+            {(stats?.top_tracks || []).map((track: any, index: number) => (
               <div key={track.id} className="flex items-center gap-3 group">
                 <span className="text-sm font-bold text-[#A3A3A3] w-4">{index + 1}</span>
                 <img

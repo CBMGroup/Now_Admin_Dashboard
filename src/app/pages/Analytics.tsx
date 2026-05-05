@@ -129,7 +129,7 @@ export function Analytics() {
                 dataKey="count"
                 nameKey="category"
               >
-                {data.category_distribution.map((entry: any, index: number) => (
+                {(data?.category_distribution || []).map((entry: any, index: number) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>

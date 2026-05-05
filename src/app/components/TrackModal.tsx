@@ -15,9 +15,9 @@ type Track = {
   trend: 'up' | 'down';
   trendValue: string;
   cover: string;
-  audio_file?: string;
-  description?: string;
-  language?: string;
+  audio_file: string | null;
+  description?: string | null;
+  language?: string | null;
   is_explicit?: boolean;
 };
 

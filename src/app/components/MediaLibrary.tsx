@@ -42,9 +42,9 @@ type Track = {
   trend: 'up' | 'down';
   trendValue: string;
   cover: string;
-  audio_file?: string;
-  description?: string;
-  language?: string;
+  audio_file: string | null;
+  description?: string | null;
+  language?: string | null;
   is_explicit?: boolean;
 };
 
@@ -81,7 +81,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
     try {
       const endpoint = category === 'All' ? '/tracks/' : `/tracks/?category=${category}`;
       const tracks = await api.get(endpoint);
-      setData(tracks.map((t: any) => ({
+      setData((Array.isArray(tracks) ? tracks : []).map((t: any) => ({
         id: t.id.toString(),
         title: t.title,
         artist: t.artist_details?.name || t.artist_name,
@@ -94,7 +94,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
         trend: 'up',
         trendValue: '+0%',
         cover: resolveMediaUrl(t.cover || t.cover_url) || 'https://images.unsplash.com/photo-1618336215696-6673cf4549ae?w=100',
-        audio_file: resolveMediaUrl(t.audio_file),
+        audio_file: resolveMediaUrl(t.audio_file) || null,
         description: t.description,
         language: t.language,
         is_explicit: t.is_explicit,

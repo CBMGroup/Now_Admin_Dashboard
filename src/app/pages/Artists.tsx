@@ -41,7 +41,7 @@ export function Artists() {
       setIsLoading(true);
       const res = await api.get('/artists/');
       // Map potential backend array to local array (adding dummy counts if none exist)
-      setData(res.map((a: any) => ({
+      setData((Array.isArray(res) ? res : []).map((a: any) => ({
         ...a,
         tracksCount: a.tracks_count || 0,
         albumsCount: a.albums_count || 0

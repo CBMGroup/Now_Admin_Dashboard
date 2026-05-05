@@ -5,7 +5,7 @@ export type PlayerTrack = {
   title: string;
   artist: string;
   cover: string;
-  audio_file?: string;
+  audio_file: string | null;
 };
 
 type PlayerContextType = {
