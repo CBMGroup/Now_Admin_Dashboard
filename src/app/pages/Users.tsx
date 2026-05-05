@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-table';
 import { Search, Edit, Trash2, ChevronLeft, ChevronRight, UserPlus, Loader2, AlertCircle } from 'lucide-react';
 import * as Switch from '@radix-ui/react-switch';
+import { UserModal, UserType } from '../components/UserModal';
 
 type User = {
   id: string;
@@ -36,6 +37,8 @@ export function Users() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [globalFilter, setGlobalFilter] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<UserType | null>(null);
 
   const fetchUsers = async () => {
     try {
@@ -66,6 +69,34 @@ export function Users() {
       setData(prev => prev.map(u => u.id === userId ? { ...u, status: newStatus } : u));
     } catch (err) {
       console.error('Failed to update user status:', err);
+    }
+  };
+
+  const handleSaveUser = async (userData: any) => {
+    try {
+      if (editingUser) {
+        await api.patch(`/users/${editingUser.id}/`, userData);
+      } else {
+        await api.post('/users/', userData);
+      }
+      await fetchUsers();
+      setIsModalOpen(false);
+      setEditingUser(null);
+    } catch (err) {
+      console.error('Failed to save user:', err);
+      alert('Failed to save user. Please check your inputs.');
+    }
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+      try {
+        await api.delete(`/users/${id}/`);
+        setData(data.filter((u) => u.id !== id));
+      } catch (err) {
+        console.error('Failed to delete user:', err);
+        alert('Failed to delete user.');
+      }
     }
   };
 
@@ -129,10 +160,19 @@ export function Users() {
       header: 'Actions',
       cell: (info) => (
         <div className="flex items-center gap-2">
-          <button className="p-2 hover:bg-[#2A2A2A] rounded-lg transition-colors">
+          <button 
+            onClick={() => {
+              setEditingUser(info.row.original as UserType);
+              setIsModalOpen(true);
+            }}
+            className="p-2 hover:bg-[#2A2A2A] rounded-lg transition-colors"
+          >
             <Edit className="w-4 h-4 text-[#A3A3A3]" />
           </button>
-          <button className="p-2 hover:bg-[#2A2A2A] rounded-lg transition-colors">
+          <button 
+            onClick={() => handleDeleteUser(info.row.original.id)}
+            className="p-2 hover:bg-[#2A2A2A] rounded-lg transition-colors"
+          >
             <Trash2 className="w-4 h-4 text-[#EF4444]" />
           </button>
         </div>
@@ -187,7 +227,13 @@ export function Users() {
           <h1 className="text-3xl font-bold text-[#F1F1F1]">Users Management</h1>
           <p className="text-[#A3A3A3] mt-1">Manage platform users and their permissions</p>
         </div>
-        <button className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20">
+        <button 
+          onClick={() => {
+            setEditingUser(null);
+            setIsModalOpen(true);
+          }}
+          className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-purple-500/20"
+        >
           <UserPlus className="w-5 h-5" />
           Add User
         </button>
@@ -288,6 +334,18 @@ export function Users() {
           </div>
         </div>
       </div>
+
+      {/* User Modal */}
+      {isModalOpen && (
+        <UserModal
+          user={editingUser}
+          onClose={() => {
+            setIsModalOpen(false);
+            setEditingUser(null);
+          }}
+          onSave={handleSaveUser}
+        />
+      )}
     </div>
   );
 }

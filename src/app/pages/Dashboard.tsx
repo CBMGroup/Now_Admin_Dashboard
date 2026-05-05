@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router';
 import { api } from '../api/client';
-import { Users, Music2, BarChart3, Mic2, TrendingUp, TrendingDown, Play, Heart, Upload, AlertCircle, Loader2 } from 'lucide-react';
+import { Users, Music2, BarChart3, Mic2, TrendingUp, TrendingDown, Play, Heart, Upload, AlertCircle, Loader2, Plus, UserPlus, Disc3 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 export function Dashboard() {
@@ -89,6 +90,37 @@ export function Dashboard() {
           icon={Mic2}
           color="orange"
         />
+      </div>
+
+      {/* Quick Actions */}
+      <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
+        <h2 className="text-xl font-bold text-[#F1F1F1] mb-4">Quick Actions</h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Link to="/tracks" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#00D1C1]/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-[#00D1C1]/10 flex items-center justify-center group-hover:bg-[#00D1C1]/20 transition-colors">
+              <Plus className="w-5 h-5 text-[#00D1C1]" />
+            </div>
+            <span className="font-medium text-[#F1F1F1]">Add Media</span>
+          </Link>
+          <Link to="/artists" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#8B5CF6]/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center group-hover:bg-[#8B5CF6]/20 transition-colors">
+              <UserPlus className="w-5 h-5 text-[#8B5CF6]" />
+            </div>
+            <span className="font-medium text-[#F1F1F1]">Add Artist</span>
+          </Link>
+          <Link to="/albums" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#F59E0B]/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-[#F59E0B]/10 flex items-center justify-center group-hover:bg-[#F59E0B]/20 transition-colors">
+              <Disc3 className="w-5 h-5 text-[#F59E0B]" />
+            </div>
+            <span className="font-medium text-[#F1F1F1]">Add Album</span>
+          </Link>
+          <Link to="/users" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#3B82F6]/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-[#3B82F6]/10 flex items-center justify-center group-hover:bg-[#3B82F6]/20 transition-colors">
+              <Users className="w-5 h-5 text-[#3B82F6]" />
+            </div>
+            <span className="font-medium text-[#F1F1F1]">Add User</span>
+          </Link>
+        </div>
       </div>
 
       {/* Main Content Grid */}
