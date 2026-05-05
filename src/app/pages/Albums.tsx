@@ -26,7 +26,8 @@ export function Albums() {
     try {
       setIsLoading(true);
       const res = await api.get('/albums/');
-      setAlbums((Array.isArray(res) ? res : []).map((a: any) => ({
+      const albumsData = Array.isArray(res) ? res : (res.results || []);
+      setAlbums(albumsData.map((a: any) => ({
         ...a,
         artist: a.artist_name || a.artist, // Handle potentially nested/relational data
         tracksCount: a.track_count || 0

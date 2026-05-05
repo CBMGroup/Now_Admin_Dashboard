@@ -15,7 +15,8 @@ export function Playlists() {
   const fetchPlaylists = async () => {
     try {
       setIsLoading(true);
-      const data = await api.get('/playlists/');
+      const res = await api.get('/playlists/');
+      const data = Array.isArray(res) ? res : (res.results || []);
       setPlaylists(data);
     } catch (err: any) {
       setError(err.message || 'Failed to fetch playlists');

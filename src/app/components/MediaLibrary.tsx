@@ -78,10 +78,12 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
   const [editingTrack, setEditingTrack] = useState<Track | null>(null);
 
   const fetchTracks = async () => {
+    setIsLoading(true);
     try {
       const endpoint = category === 'All' ? '/tracks/' : `/tracks/?category=${category}`;
-      const tracks = await api.get(endpoint);
-      setData((Array.isArray(tracks) ? tracks : []).map((t: any) => ({
+      const tracksData = await api.get(endpoint);
+      const tracks = Array.isArray(tracksData) ? tracksData : (tracksData.results || []);
+      setData(tracks.map((t: any) => ({
         id: t.id.toString(),
         title: t.title,
         artist: t.artist_details?.name || t.artist_name,
