@@ -12,6 +12,7 @@ import {
 import { Search, Edit, Trash2, ChevronLeft, ChevronRight, UserPlus, Loader2, AlertCircle } from 'lucide-react';
 import * as Switch from '@radix-ui/react-switch';
 import { UserModal, UserType } from '../components/UserModal';
+import { Skeleton } from '../components/ui/skeleton';
 
 type User = {
   id: string;

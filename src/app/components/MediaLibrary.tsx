@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { TrackModal } from './TrackModal';
 import { usePlayer } from '../context/PlayerContext';
+import { Skeleton } from './ui/skeleton';
 
 type Track = {
   id: string;
