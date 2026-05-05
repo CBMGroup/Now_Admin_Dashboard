@@ -38,7 +38,8 @@ export function AlbumModal({ album, onClose, onSave, isSaving }: AlbumModalProps
     const fetchArtists = async () => {
       setIsLoadingArtists(true);
       try {
-        const data = await api.get('/artists/');
+        const res = await api.get('/artists/');
+        const data = Array.isArray(res) ? res : (res.results || []);
         setArtists(data);
         // Pre-select if we only have name but no ID
         if (album?.artist && !album?.artist_id) {
