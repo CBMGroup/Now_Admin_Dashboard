@@ -24,6 +24,10 @@ export function Playlists() {
     }
   };
 
+  useEffect(() => {
+    fetchPlaylists();
+  }, []);
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -53,10 +57,6 @@ export function Playlists() {
       </div>
     );
   }
-
-  useEffect(() => {
-    fetchPlaylists();
-  }, []);
 
   const handleSavePlaylist = async (playlistData: any) => {
     try {
