@@ -6,6 +6,8 @@ export function Podcasts() {
       category="Podcast" 
       title="Podcasts" 
       subtitle="Manage all podcast shows and episodes" 
+      modalType="podcast"
+      customEndpoint="/podcasts/"
     />
   );
 }

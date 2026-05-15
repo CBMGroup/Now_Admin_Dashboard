@@ -28,6 +28,10 @@ import {
 import { TrackModal } from './TrackModal';
 import { usePlayer } from '../context/PlayerContext';
 import { Skeleton } from './ui/skeleton';
+import { PodcastModal } from './PodcastModal';
+import { AudioBookModal } from './AudioBookModal';
+import { AudioPlayModal } from './AudioPlayModal';
+import { PoemModal } from './PoemModal';
 
 type Track = {
   id: string;
@@ -52,6 +56,8 @@ interface MediaLibraryProps {
   category: string;
   title: string;
   subtitle: string;
+  customEndpoint?: string;
+  modalType?: 'track' | 'podcast' | 'audiobook' | 'audioplay' | 'poem';
 }
 
 const categoryColors: Record<string, string> = {
@@ -67,7 +73,7 @@ const categoryColors: Record<string, string> = {
 
 const columnHelper = createColumnHelper<Track>();
 
-export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
+export function MediaLibrary({ category, title, subtitle, customEndpoint, modalType = 'track' }: MediaLibraryProps) {
   const [data, setData] = useState<Track[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +86,7 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
   const fetchTracks = async () => {
     setIsLoading(true);
     try {
-      const endpoint = category === 'All' ? '/tracks/' : `/tracks/?category=${category}`;
+      const endpoint = customEndpoint || (category === 'All' ? '/tracks/' : `/tracks/?category=${category}`);
       const tracksData = await api.get(endpoint);
       const tracks = Array.isArray(tracksData) ? tracksData : (tracksData.results || []);
       setData(tracks.map((t: any) => ({
@@ -115,7 +121,8 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this item?')) {
       try {
-        await api.delete(`/tracks/${id}/`);
+        const deleteEndpoint = customEndpoint ? `${customEndpoint}${id}/` : `/tracks/${id}/`;
+        await api.delete(deleteEndpoint);
         setData(data.filter((track) => track.id !== id));
       } catch (err) {
         console.error('Failed to delete item:', err);
@@ -451,34 +458,141 @@ export function MediaLibrary({ category, title, subtitle }: MediaLibraryProps) {
       </div>
 
 
-      {/* Track Modal */}
+      {/* Specialized Modals */}
       {isModalOpen && (
-        <TrackModal
-          track={editingTrack}
-          onClose={() => {
-            setIsModalOpen(false);
-            setEditingTrack(null);
-          }}
-          onSave={async (trackData) => {
-            try {
-              if (editingTrack) {
-                await api.patch(`/tracks/${editingTrack.id}/`, trackData);
-              } else {
-                // If we are in a specific category, ensure it's set
-                if (category !== 'All' && !trackData.get('category')) {
-                    trackData.append('category', category);
+        <>
+          {modalType === 'track' && (
+            <TrackModal
+              track={editingTrack}
+              onClose={() => {
+                setIsModalOpen(false);
+                setEditingTrack(null);
+              }}
+              onSave={async (trackData) => {
+                try {
+                  if (editingTrack) {
+                    await api.patch(`/tracks/${editingTrack.id}/`, trackData);
+                  } else {
+                    if (category !== 'All' && !trackData.get('category')) {
+                        trackData.append('category', category);
+                    }
+                    await api.post('/tracks/', trackData);
+                  }
+                  await fetchTracks();
+                  setIsModalOpen(false);
+                  setEditingTrack(null);
+                } catch (err) {
+                  console.error('Failed to save item:', err);
+                  alert('Failed to save item. Please check your inputs.');
                 }
-                await api.post('/tracks/', trackData);
-              }
-              await fetchTracks();
-              setIsModalOpen(false);
-              setEditingTrack(null);
-            } catch (err) {
-              console.error('Failed to save item:', err);
-              alert('Failed to save item. Please check your inputs.');
-            }
-          }}
-        />
+              }}
+            />
+          )}
+
+          {modalType === 'podcast' && (
+            <PodcastModal
+              track={editingTrack}
+              onClose={() => {
+                setIsModalOpen(false);
+                setEditingTrack(null);
+              }}
+              onSave={async (trackData) => {
+                try {
+                  const endpoint = customEndpoint || '/tracks/';
+                  if (editingTrack) {
+                    await api.patch(`${endpoint}${editingTrack.id}/`, trackData);
+                  } else {
+                    await api.post(endpoint, trackData);
+                  }
+                  await fetchTracks();
+                  setIsModalOpen(false);
+                  setEditingTrack(null);
+                } catch (err) {
+                  console.error('Failed to save podcast:', err);
+                  alert('Failed to save podcast.');
+                }
+              }}
+            />
+          )}
+
+          {modalType === 'audiobook' && (
+            <AudioBookModal
+              track={editingTrack}
+              onClose={() => {
+                setIsModalOpen(false);
+                setEditingTrack(null);
+              }}
+              onSave={async (trackData) => {
+                try {
+                  const endpoint = customEndpoint || '/tracks/';
+                  if (editingTrack) {
+                    await api.patch(`${endpoint}${editingTrack.id}/`, trackData);
+                  } else {
+                    await api.post(endpoint, trackData);
+                  }
+                  await fetchTracks();
+                  setIsModalOpen(false);
+                  setEditingTrack(null);
+                } catch (err) {
+                  console.error('Failed to save audiobook:', err);
+                  alert('Failed to save audiobook.');
+                }
+              }}
+            />
+          )}
+
+          {modalType === 'audioplay' && (
+            <AudioPlayModal
+              track={editingTrack}
+              onClose={() => {
+                setIsModalOpen(false);
+                setEditingTrack(null);
+              }}
+              onSave={async (trackData) => {
+                try {
+                  const endpoint = customEndpoint || '/tracks/';
+                  if (editingTrack) {
+                    await api.patch(`${endpoint}${editingTrack.id}/`, trackData);
+                  } else {
+                    await api.post(endpoint, trackData);
+                  }
+                  await fetchTracks();
+                  setIsModalOpen(false);
+                  setEditingTrack(null);
+                } catch (err) {
+                  console.error('Failed to save audio play:', err);
+                  alert('Failed to save audio play.');
+                }
+              }}
+            />
+          )}
+
+          {modalType === 'poem' && (
+            <PoemModal
+              track={editingTrack}
+              onClose={() => {
+                setIsModalOpen(false);
+                setEditingTrack(null);
+              }}
+              onSave={async (trackData) => {
+                try {
+                  const endpoint = customEndpoint || '/tracks/';
+                  if (editingTrack) {
+                    await api.patch(`${endpoint}${editingTrack.id}/`, trackData);
+                  } else {
+                    await api.post(endpoint, trackData);
+                  }
+                  await fetchTracks();
+                  setIsModalOpen(false);
+                  setEditingTrack(null);
+                } catch (err) {
+                  console.error('Failed to save poem:', err);
+                  alert('Failed to save poem.');
+                }
+              }}
+            />
+          )}
+        </>
       )}
     </div>
   );

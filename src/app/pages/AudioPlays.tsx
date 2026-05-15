@@ -6,6 +6,8 @@ export function AudioPlays() {
       category="Audio Plays" 
       title="Audio Plays" 
       subtitle="Manage all audio dramas and plays" 
+      modalType="audioplay"
+      customEndpoint="/audioplays/"
     />
   );
 }
