@@ -87,7 +87,7 @@ export function MiniPlayer({ track, onClose }: MiniPlayerProps) {
     <div className="fixed bottom-0 left-[280px] right-0 h-24 bg-[#1A1A1A]/80 backdrop-blur-xl border-t border-[#2A2A2A] px-8 flex items-center gap-8 z-[60] shadow-[0_-10px_40px_rgba(0,0,0,0.5)]">
       <audio
         ref={audioRef}
-        src={track.audio_file}
+        src={track.audio_file ?? undefined}
         onTimeUpdate={onTimeUpdate}
         onLoadedMetadata={onLoadedMetadata}
         onEnded={onEnded}
