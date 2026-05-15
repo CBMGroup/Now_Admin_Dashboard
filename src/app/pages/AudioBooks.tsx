@@ -6,6 +6,8 @@ export function AudioBooks() {
       category="Audiobooks" 
       title="Audio Books" 
       subtitle="Manage all audio books and narrations" 
+      modalType="audiobook"
+      customEndpoint="/audiobooks/"
     />
   );
 }
