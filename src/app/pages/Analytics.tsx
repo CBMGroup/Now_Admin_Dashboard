@@ -36,69 +36,51 @@ export function Analytics() {
   if (isLoading) return <AnalyticsSkeleton />;
   if (error) return <AnalyticsError error={error} />;
 
-  // Mock relationship data if not provided by backend
-  const relationshipData = data.relationship_data || [
-    { x: 180, y: 400, name: 'Pop Hit' },
-    { x: 300, y: 1200, name: 'Podcast Ep' },
-    { x: 120, y: 200, name: 'Short Poem' },
-    { x: 450, y: 800, name: 'Audio Book Ch' },
-    { x: 60, y: 50, name: 'Intro' },
-    { x: 240, y: 950, name: 'Drama Act' },
-  ];
-
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       className="space-y-8 pb-20"
     >
-      {/* Header & Quick Insights */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-4xl font-black text-[#F1F1F1] tracking-tight">Intelligence Hub</h1>
-          <p className="text-[#A3A3A3] mt-1 text-lg">Real-time platform performance & behavioral insights.</p>
+          <p className="text-[#A3A3A3] mt-1 text-lg">Performance metrics from live platform data.</p>
         </div>
         <div className="flex gap-3">
           <button className="px-5 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] hover:bg-[#2A2A2A] text-white rounded-xl font-bold transition-all flex items-center gap-2 shadow-xl shadow-black/20">
             <Download className="w-5 h-5" />
-            Generate PDF
+            Export Data
           </button>
         </div>
       </div>
 
-      {/* Decision Support Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Real Data Insights */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <InsightCard 
-            title="Retention Rate" 
-            value="68.4%" 
-            change="+4.2%" 
+            title="Total Engagement" 
+            value={data.streams_over_time.reduce((acc: any, curr: any) => acc + curr.streams, 0).toLocaleString()} 
+            change="" 
             trend="up" 
-            icon={Users} 
-            description="Users returning weekly"
+            icon={Activity} 
+            description="Streams in the last 30 days"
         />
         <InsightCard 
-            title="Avg. Session" 
-            value="42m" 
-            change="+12%" 
+            title="Active Library" 
+            value={data.category_distribution.reduce((acc: any, curr: any) => acc + curr.count, 0).toLocaleString()} 
+            change="" 
             trend="up" 
-            icon={Clock} 
-            description="Time spent per user"
+            icon={Music2} 
+            description="Total tracks across all categories"
         />
         <InsightCard 
-            title="Global Reach" 
-            value="124" 
-            change="+3" 
-            trend="up" 
-            icon={Globe} 
-            description="Countries with active streams"
-        />
-        <InsightCard 
-            title="Processing Load" 
-            value="14ms" 
-            change="-2ms" 
+            title="Dominant Content" 
+            value={data.category_distribution[0]?.category || 'N/A'} 
+            change="" 
             trend="up" 
             icon={Zap} 
-            description="API response latency"
+            description="Highest volume category"
         />
       </div>
 
@@ -148,20 +130,6 @@ export function Analytics() {
                 ))}
               </Bar>
             </BarChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-
-        {/* Relationship: Scatter Plot */}
-        <ChartContainer title="Duration vs Engagement" subtitle="Correlation between track length and total plays">
-          <ResponsiveContainer width="100%" height={350}>
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2A2A2A" />
-              <XAxis type="number" dataKey="x" name="Duration" unit="s" stroke="#404040" tick={{ fontSize: 10, fill: '#A3A3A3' }} />
-              <YAxis type="number" dataKey="y" name="Plays" stroke="#404040" tick={{ fontSize: 10, fill: '#A3A3A3' }} />
-              <ZAxis type="category" dataKey="name" name="Track" />
-              <Tooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
-              <Scatter name="Tracks" data={relationshipData} fill="#00D1C1" />
-            </ScatterChart>
           </ResponsiveContainer>
         </ChartContainer>
 
