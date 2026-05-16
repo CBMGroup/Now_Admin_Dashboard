@@ -38,7 +38,8 @@ export function PlaylistModal({ playlist, onClose, onSave }: PlaylistModalProps)
     const fetchTracks = async () => {
       setIsLoadingTracks(true);
       try {
-        const data = await api.get('/tracks/');
+        const res = await api.get('/tracks/');
+        const data = Array.isArray(res) ? res : (res.results || []);
         setAllTracks(data);
       } catch (err) {
         console.error('Failed to fetch tracks:', err);
@@ -49,10 +50,16 @@ export function PlaylistModal({ playlist, onClose, onSave }: PlaylistModalProps)
     fetchTracks();
   }, []);
 
-  const filteredTracks = allTracks.filter(track => 
-    track.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    (track.artist_details?.name || track.artist_name).toLowerCase().includes(searchQuery.toLowerCase())
-  ).filter(track => !formData.tracks.includes(track.id.toString()));
+  const filteredTracks = (allTracks || []).filter(track => {
+    if (!track) return false;
+    const titleMatch = track.title?.toLowerCase().includes(searchQuery.toLowerCase());
+    const artistName = track.artist_details?.name || track.artist_name || '';
+    const artistMatch = artistName.toLowerCase().includes(searchQuery.toLowerCase());
+    return titleMatch || artistMatch;
+  }).filter(track => {
+    if (!track || !track.id) return false;
+    return !(formData.tracks || []).includes(track.id.toString());
+  });
 
   const handleAddTrack = (track: any) => {
     setFormData(prev => ({
