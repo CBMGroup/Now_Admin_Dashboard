@@ -33,8 +33,7 @@ export function Dashboard() {
   if (error) return <DashboardError error={error} />;
 
   // Derived insight: High performing category
-  const topCategory = stats.top_tracks?.[0]?.category || 'Music';
-  const growthRate = "+14.2%";
+  const topCategory = stats.top_tracks?.[0]?.category || 'N/A';
 
   return (
     <motion.div 
@@ -61,66 +60,15 @@ export function Dashboard() {
 
       {/* Primary KPI Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <KPICard title="Platform Users" value={stats.total_users} change="+12.5%" trend="up" icon={Users} color="cyan" />
-        <KPICard title="Media Assets" value={stats.total_tracks} change="+8.2%" trend="up" icon={Music2} color="purple" />
-        <KPICard title="Stream Volume" value={stats.total_streams} change="+23.1%" trend="up" icon={BarChart3} color="emerald" />
-        <KPICard title="Active Talent" value={stats.active_artists} change="-2.4%" trend="down" icon={Mic2} color="orange" />
-      </div>
-
-      {/* Strategic Insights Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Performance Overview (Chart) */}
-        <div className="lg:col-span-2 bg-[#1A1A1A] rounded-3xl border border-[#2A2A2A] p-8 relative overflow-hidden group hover:border-[#00D1C1]/20 transition-all shadow-2xl">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h3 className="text-xl font-bold text-white">Stream Momentum</h3>
-              <p className="text-sm text-[#A3A3A3]">Growth trajectory over the last 30 days</p>
-            </div>
-            <Link to="/analytics" className="p-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl hover:bg-[#00D1C1] hover:text-black transition-all group/btn">
-                <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-          
-          <div className="h-[250px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={stats.recent_activity.slice(0, 7).map((a:any, i:number) => ({ name: i, value: 100 + i * 20 + Math.random() * 50 }))}>
-                <defs>
-                  <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#00D1C1" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#00D1C1" stopOpacity={0}/>
-                  </linearGradient>
-                </defs>
-                <Area type="monotone" dataKey="value" stroke="#00D1C1" strokeWidth={3} fillOpacity={1} fill="url(#colorValue)" />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-          
-          <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-[#2A2A2A]">
-            <InsightMini title="Conversion" value="4.2%" icon={Target} />
-            <InsightMini title="Satisfaction" value="4.8/5" icon={Star} />
-            <InsightMini title="Daily Active" value="1,240" icon={Users} />
-          </div>
-        </div>
-
-        {/* High Performance Spotlight */}
-        <div className="bg-gradient-to-br from-[#00D1C1] to-[#00B8A9] rounded-3xl p-8 text-black flex flex-col justify-between shadow-2xl shadow-teal-500/20">
-            <div>
-                <div className="w-12 h-12 bg-black/10 rounded-2xl flex items-center justify-center mb-6">
-                    <TrendingUp className="w-6 h-6" />
-                </div>
-                <h3 className="text-2xl font-black mb-2 leading-tight">Trending Category: {topCategory}</h3>
-                <p className="text-black/70 font-medium leading-relaxed">Engagement in this sector is growing at <span className="font-bold text-black">{growthRate}</span> week-over-week. Consider increasing catalog depth.</p>
-            </div>
-            <Link to="/tracks" className="mt-8 px-6 py-4 bg-black text-white rounded-2xl font-black flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform active:scale-[0.98]">
-                Boost Catalog
-                <Plus className="w-5 h-5" />
-            </Link>
-        </div>
+        <KPICard title="Platform Users" value={stats.total_users} icon={Users} color="cyan" />
+        <KPICard title="Media Assets" value={stats.total_tracks} icon={Music2} color="purple" />
+        <KPICard title="Stream Volume" value={stats.total_streams} icon={BarChart3} color="emerald" />
+        <KPICard title="Active Talent" value={stats.active_artists} icon={Mic2} color="orange" />
       </div>
 
       {/* Quick Access Grid */}
       <div className="bg-[#1A1A1A] rounded-3xl border border-[#2A2A2A] p-8">
-        <h2 className="text-xl font-bold text-white mb-6">Direct Management</h2>
+        <h2 className="text-xl font-bold text-white mb-6">Content Management</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
           <QuickLink to="/tracks" icon={Music2} label="Music" color="cyan" />
           <QuickLink to="/podcasts" icon={Mic2} label="Podcasts" color="emerald" />
@@ -152,7 +100,7 @@ export function Dashboard() {
                 transition={{ delay: i * 0.1 }}
                 className="flex items-center gap-4 p-4 rounded-2xl hover:bg-[#0A0A0A] border border-transparent hover:border-[#2A2A2A] transition-all group"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1A1A1A] to-[#0A0A0A] border border-[#2A2A2A] flex items-center justify-center flex-shrink-0 group-hover:border-[#00D1C1]/30 transition-colors">
+                <div className="w-12 h-12 rounded-2xl bg-[#0A0A0A] border border-[#2A2A2A] flex items-center justify-center flex-shrink-0 group-hover:border-[#00D1C1]/30 transition-colors">
                   <span className="text-lg font-black text-[#00D1C1]">{activity.user.charAt(0)}</span>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -168,10 +116,13 @@ export function Dashboard() {
                 </div>
               </motion.div>
             ))}
+            {(stats?.recent_activity || []).length === 0 && (
+                <p className="text-center py-10 text-[#404040]">No recent activity found.</p>
+            )}
           </div>
         </div>
 
-        {/* Top Performers Table-style list */}
+        {/* Top Performers */}
         <div className="bg-[#1A1A1A] rounded-3xl border border-[#2A2A2A] p-8">
           <h2 className="text-xl font-bold text-white mb-8">Asset Rankings</h2>
           <div className="space-y-6">
@@ -194,6 +145,9 @@ export function Dashboard() {
                 </div>
               </div>
             ))}
+            {(stats?.top_tracks || []).length === 0 && (
+                <p className="text-center py-10 text-[#404040]">No track data available.</p>
+            )}
           </div>
         </div>
       </div>
@@ -201,7 +155,7 @@ export function Dashboard() {
   );
 }
 
-function KPICard({ title, value, change, trend, icon: Icon, color }: any) {
+function KPICard({ title, value, icon: Icon, color }: any) {
   const colorThemes: any = {
     cyan: 'from-[#00D1C1] to-[#00B8A9] shadow-[#00D1C1]/20',
     purple: 'from-[#8B5CF6] to-[#7C3AED] shadow-[#8B5CF6]/20',
@@ -219,30 +173,11 @@ function KPICard({ title, value, change, trend, icon: Icon, color }: any) {
         <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${colorThemes[color]} flex items-center justify-center shadow-lg text-black`}>
           <Icon className="w-7 h-7" />
         </div>
-        <div className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-black ${trend === 'up' ? 'text-[#00D1C1] bg-[#00D1C1]/10' : 'text-[#EF4444] bg-[#EF4444]/10'}`}>
-          {trend === 'up' ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
-          {change}
-        </div>
       </div>
       <h3 className="text-3xl font-black text-white mb-1 tracking-tight">{typeof value === 'number' ? value.toLocaleString() : value}</h3>
       <p className="text-xs font-bold text-[#A3A3A3] uppercase tracking-widest">{title}</p>
-      <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
     </motion.div>
   );
-}
-
-function InsightMini({ title, value, icon: Icon }: any) {
-    return (
-        <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0A0A0A] border border-[#2A2A2A] flex items-center justify-center">
-                <Icon className="w-5 h-5 text-[#A3A3A3]" />
-            </div>
-            <div>
-                <p className="text-[10px] font-bold text-[#525252] uppercase tracking-widest">{title}</p>
-                <p className="text-sm font-black text-white">{value}</p>
-            </div>
-        </div>
-    );
 }
 
 function QuickLink({ to, icon: Icon, label, color }: any) {
@@ -279,10 +214,7 @@ function DashboardSkeleton() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-44 w-full rounded-3xl" />)}
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Skeleton className="lg:col-span-2 h-[450px] w-full rounded-3xl" />
-        <Skeleton className="h-[450px] w-full rounded-3xl" />
-      </div>
+      <div className="h-[400px] w-full rounded-3xl bg-[#1A1A1A]" />
     </div>
   );
 }
