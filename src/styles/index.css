@@ -5,36 +5,70 @@
 /* Custom Scrollbar for NowPlay Dark Theme */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #8B5CF6 #1A1A1A;
+  scrollbar-color: #00D1C1 #0A0A0A;
 }
 
 *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 *::-webkit-scrollbar-track {
-  background: #1A1A1A;
+  background: #0A0A0A;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #8B5CF6;
-  border-radius: 4px;
+  background: #2A2A2A;
+  border-radius: 20px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #7C3AED;
+  background: #00D1C1;
 }
 
-/* Smooth transitions */
+/* Global Transitions */
 * {
-  transition-property: background-color, border-color, color, fill, stroke;
+  transition-property: background-color, border-color, color, fill, stroke, transform, box-shadow, opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-duration: 200ms;
+}
+
+/* Page & Component Animations */
+.page-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glassmorphism Effect */
+.glass-panel {
+  background: rgba(26, 26, 26, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Card Hover Elevation */
+.hover-premium {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hover-premium:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -20px rgba(0, 209, 193, 0.2);
+  border-color: rgba(0, 209, 193, 0.4) !important;
+}
+
+/* Custom Chart Tooltip styling */
+.recharts-tooltip-cursor {
+  stroke: rgba(0, 209, 193, 0.2);
+  stroke-width: 2;
 }
 
 /* Selection color */
 ::selection {
-  background-color: #8B5CF6;
-  color: #F1F1F1;
+  background-color: #00D1C1;
+  color: #0A0A0A;
 }

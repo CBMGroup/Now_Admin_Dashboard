@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useSearchParams } from 'react-router';
 import { api, resolveMediaUrl } from '../api/client';
+import { motion } from 'motion/react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -312,7 +313,11 @@ export function MediaLibrary({ category, title, subtitle, customEndpoint, modalT
   }
 
   return (
-    <div className="space-y-6 pb-24">
+    <motion.div 
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="space-y-6 pb-24"
+    >
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -594,6 +599,6 @@ export function MediaLibrary({ category, title, subtitle, customEndpoint, modalT
           )}
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
