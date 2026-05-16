@@ -8,7 +8,7 @@ export function PoemModal({ track, onClose, onSave }: { track: any, onClose: () 
   
   const [formData, setFormData] = useState({
     title: track?.title || '',
-    poet: track?.artist_id?.toString() || '',
+    poet: track?.artist_id?.toString() || track?.poet_id?.toString() || '',
     category: 'Poems',
     duration: track?.duration?.toString() || '300',
     cover_url: track?.cover || '',
@@ -34,14 +34,27 @@ export function PoemModal({ track, onClose, onSave }: { track: any, onClose: () 
     if (formData.poet) payload.append('poet', formData.poet);
     payload.append('category', 'Poems');
     payload.append('duration', formData.duration);
+    
     if (selectedFile) payload.append('audio_file', selectedFile);
     if (selectedCoverFile) payload.append('cover', selectedCoverFile);
+    
+    if (formData.cover_url && !selectedCoverFile && !formData.cover_url.startsWith('blob:')) {
+        payload.append('cover_url', formData.cover_url);
+    }
+    
     payload.append('description', formData.description);
     payload.append('language', formData.language);
     payload.append('is_explicit', formData.is_explicit.toString());
     
     setIsSaving(true);
-    try { await onSave(payload); } finally { setIsSaving(false); }
+    try { 
+      await onSave(payload); 
+    } catch (err) {
+      console.error('Save failed:', err);
+      alert('Failed to save poem. Please ensure all required fields are filled.');
+    } finally { 
+      setIsSaving(false); 
+    }
   };
 
   return (
@@ -52,6 +65,27 @@ export function PoemModal({ track, onClose, onSave }: { track: any, onClose: () 
           <button onClick={onClose} className="p-2 hover:bg-[#2A2A2A] rounded-lg transition-colors"><X className="w-6 h-6 text-[#A3A3A3]" /></button>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Audio Upload */}
+          <div>
+            <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
+              Poem Audio File
+            </label>
+            <div className="border-2 border-dashed border-[#2A2A2A] rounded-xl p-8 hover:border-[#8b5cf6]/50 transition-all">
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className="w-16 h-16 rounded-full bg-[#8b5cf6]/10 flex items-center justify-center mb-2">
+                  <Upload className="w-8 h-8 text-[#8b5cf6]" />
+                </div>
+                <p className="text-[#F1F1F1] font-semibold">
+                  {selectedFile ? selectedFile.name : formData.audio_file ? 'Audio file attached' : 'Click to upload poem audio'}
+                </p>
+                <input type="file" ref={fileInputRef} onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} accept=".mp3,.wav,.m4a,.aac,.ogg,audio/*" className="hidden" />
+                <button type="button" onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-[#2A2A2A] hover:bg-[#333333] text-[#F1F1F1] rounded-lg text-sm font-bold border border-[#3A3A3A]">
+                  Browse Audio Files
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-full">
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Poem Title</label>
@@ -64,11 +98,15 @@ export function PoemModal({ track, onClose, onSave }: { track: any, onClose: () 
                 {poets.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
               </select>
             </div>
+            <div className="col-span-full">
+              <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Description</label>
+              <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows={3} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-[#8b5cf6] outline-none" />
+            </div>
           </div>
           <div className="flex gap-4 pt-6 border-t border-[#2A2A2A]">
             <button type="button" onClick={onClose} className="px-6 py-3 bg-[#2A2A2A] text-[#F1F1F1] rounded-xl font-bold flex-1">Cancel</button>
             <button type="submit" className="px-6 py-3 bg-[#8b5cf6] text-white rounded-xl font-bold flex-1 shadow-lg shadow-purple-500/20">
-              {isSaving ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : (track ? 'Update' : 'Create')}
+              {isSaving ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : (track ? 'Update Poem' : 'Create Poem')}
             </button>
           </div>
         </form>

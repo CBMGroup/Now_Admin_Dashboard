@@ -139,7 +139,7 @@ export function PodcastModal({ track, onClose, onSave }: PodcastModalProps) {
                     {selectedFile ? selectedFile.name : formData.audio_file ? 'Audio file attached' : 'Click to upload episode audio'}
                   </p>
                 </div>
-                <input type="file" ref={fileInputRef} onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} accept="audio/*" className="hidden" />
+                <input type="file" ref={fileInputRef} onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} accept=".mp3,.wav,.m4a,.aac,.ogg,audio/*" className="hidden" />
                 <button type="button" onClick={() => fileInputRef.current?.click()} className="px-4 py-2 bg-[#2A2A2A] hover:bg-[#333333] text-[#F1F1F1] rounded-lg transition-all text-sm font-bold border border-[#3A3A3A]">
                   Browse Files
                 </button>
