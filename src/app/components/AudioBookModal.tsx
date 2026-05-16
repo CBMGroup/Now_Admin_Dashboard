@@ -8,6 +8,7 @@ export function AudioBookModal({ track, onClose, onSave }: { track: any, onClose
   const [isLoadingAuthors, setIsLoadingAuthors] = useState(false);
   const [isLoadingBooks, setIsLoadingBooks] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   
   const [formData, setFormData] = useState({
     title: track?.title || '',
@@ -45,6 +46,24 @@ export function AudioBookModal({ track, onClose, onSave }: { track: any, onClose
     };
     fetchData();
   }, []);
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      setSelectedFile(files[0]);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,45 +109,61 @@ export function AudioBookModal({ track, onClose, onSave }: { track: any, onClose
             <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">
               Chapter Audio File
             </label>
-            <div className="border-2 border-dashed border-[#2A2A2A] rounded-xl p-8 hover:border-[#EC4899]/50 transition-all text-center">
-                <Upload className="w-8 h-8 text-[#EC4899] mx-auto mb-2" />
-                <p className="text-[#F1F1F1] font-semibold">
-                    {selectedFile ? selectedFile.name : formData.audio_file ? 'Audio file attached' : 'Click to upload narration'}
-                </p>
+            <div 
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+              className={`border-2 border-dashed rounded-xl p-8 transition-all ${
+                isDragging 
+                  ? 'border-pink-500 bg-pink-500/10 scale-[0.99]' 
+                  : 'border-[#2A2A2A] hover:border-pink-500/50'
+              }`}
+            >
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className="w-16 h-16 rounded-full bg-pink-500/10 flex items-center justify-center mb-2">
+                  <Upload className="w-8 h-8 text-pink-500" />
+                </div>
+                <div>
+                  <p className="text-[#F1F1F1] font-semibold">
+                      {selectedFile ? selectedFile.name : formData.audio_file ? 'Audio file attached' : 'Click or drag narration file'}
+                  </p>
+                  <p className="text-xs text-[#A3A3A3] mt-1">MP3, WAV, M4A or AAC</p>
+                </div>
                 <input type="file" ref={fileInputRef} onChange={(e) => setSelectedFile(e.target.files?.[0] || null)} accept=".mp3,.wav,.m4a,.aac,.ogg,audio/*" className="hidden" />
-                <button type="button" onClick={() => fileInputRef.current?.click()} className="mt-2 px-4 py-2 bg-[#2A2A2A] text-white rounded-lg text-sm font-bold border border-[#3A3A3A]">
+                <button type="button" onClick={() => fileInputRef.current?.click()} className="mt-2 px-4 py-2 bg-[#2A2A2A] hover:bg-[#333333] text-[#F1F1F1] rounded-lg text-sm font-bold border border-[#3A3A3A]">
                     Browse Audio Files
                 </button>
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="col-span-full">
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Chapter/Book Title</label>
-              <input type="text" required value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-[#EC4899] outline-none transition-all" />
+              <input type="text" required value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-pink-500 outline-none transition-all" />
             </div>
             <div>
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Author</label>
-              <select required value={formData.author} onChange={(e) => setFormData({...formData, author: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-[#EC4899] outline-none">
+              <select required value={formData.author} onChange={(e) => setFormData({...formData, author: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-pink-500 outline-none">
                 <option value="">Select Author</option>
                 {authors.map((a) => <option key={a.id} value={a.id}>{a.name}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Audiobook Series</label>
-              <select required value={formData.book} onChange={(e) => setFormData({...formData, book: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-[#EC4899] outline-none">
+              <select required value={formData.book} onChange={(e) => setFormData({...formData, book: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-pink-500 outline-none">
                 <option value="">Select Book</option>
                 {books.map((b) => <option key={b.id} value={b.id}>{b.title}</option>)}
               </select>
             </div>
-            <div>
-                <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Duration (seconds)</label>
-                <input type="number" required value={formData.duration} onChange={(e) => setFormData({...formData, duration: e.target.value})} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1]" />
+            <div className="col-span-full">
+              <label className="block text-sm font-medium text-[#A3A3A3] mb-2 uppercase tracking-widest text-[10px]">Description</label>
+              <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows={3} className="w-full px-4 py-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl text-[#F1F1F1] focus:ring-2 focus:ring-pink-500 outline-none" />
             </div>
           </div>
           <div className="flex gap-4 pt-6 border-t border-[#2A2A2A]">
             <button type="button" onClick={onClose} className="px-6 py-3 bg-[#2A2A2A] text-[#F1F1F1] rounded-xl font-bold flex-1">Cancel</button>
-            <button type="submit" className="px-6 py-3 bg-[#EC4899] text-white rounded-xl font-bold flex-1 shadow-lg shadow-pink-500/20">
+            <button type="submit" className="px-6 py-3 bg-pink-500 text-white rounded-xl font-bold flex-1 shadow-lg shadow-pink-500/20">
               {isSaving ? <Loader2 className="w-5 h-5 animate-spin mx-auto" /> : (track ? 'Update Chapter' : 'Create Chapter')}
             </button>
           </div>
