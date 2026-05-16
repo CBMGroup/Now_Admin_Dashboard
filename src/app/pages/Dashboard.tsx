@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { api } from '../api/client';
-import { Users, Music2, BarChart3, Mic2, TrendingUp, TrendingDown, Play, Heart, Upload, AlertCircle, Loader2, Plus, UserPlus, Disc3 } from 'lucide-react';
+import { Users, Music2, BarChart3, Mic2, TrendingUp, TrendingDown, Play, Heart, Upload, AlertCircle, Loader2, Plus, UserPlus, Disc3, BookOpen, Theater, Feather } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 import { Skeleton } from '../components/ui/skeleton';
@@ -109,33 +109,56 @@ export function Dashboard() {
         />
       </div>
 
-      {/* Quick Actions */}
       <div className="bg-[#1A1A1A] rounded-xl border border-[#2A2A2A] p-6">
         <h2 className="text-xl font-bold text-[#F1F1F1] mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Link to="/tracks" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#00D1C1]/50 transition-all group">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+          <Link to="/tracks" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#00D1C1]/50 transition-all group">
             <div className="w-10 h-10 rounded-lg bg-[#00D1C1]/10 flex items-center justify-center group-hover:bg-[#00D1C1]/20 transition-colors">
               <Plus className="w-5 h-5 text-[#00D1C1]" />
             </div>
-            <span className="font-medium text-[#F1F1F1]">Add Media</span>
+            <span className="text-xs font-medium text-[#F1F1F1]">Media</span>
           </Link>
-          <Link to="/artists" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#8B5CF6]/50 transition-all group">
+          <Link to="/podcasts" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-emerald-500/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+              <Mic2 className="w-5 h-5 text-emerald-500" />
+            </div>
+            <span className="text-xs font-medium text-[#F1F1F1]">Podcasts</span>
+          </Link>
+          <Link to="/audio-books" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-pink-500/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center group-hover:bg-pink-500/20 transition-colors">
+              <BookOpen className="w-5 h-5 text-pink-500" />
+            </div>
+            <span className="text-xs font-medium text-[#F1F1F1]">Books</span>
+          </Link>
+          <Link to="/audio-plays" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-rose-500/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-rose-500/10 flex items-center justify-center group-hover:bg-rose-500/20 transition-colors">
+              <Theater className="w-5 h-5 text-rose-500" />
+            </div>
+            <span className="text-xs font-medium text-[#F1F1F1]">Plays</span>
+          </Link>
+          <Link to="/poems" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-purple-500/50 transition-all group">
+            <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+              <Feather className="w-5 h-5 text-purple-500" />
+            </div>
+            <span className="text-xs font-medium text-[#F1F1F1]">Poems</span>
+          </Link>
+          <Link to="/artists" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#8B5CF6]/50 transition-all group">
             <div className="w-10 h-10 rounded-lg bg-[#8B5CF6]/10 flex items-center justify-center group-hover:bg-[#8B5CF6]/20 transition-colors">
               <UserPlus className="w-5 h-5 text-[#8B5CF6]" />
             </div>
-            <span className="font-medium text-[#F1F1F1]">Add Artist</span>
+            <span className="text-xs font-medium text-[#F1F1F1]">Artists</span>
           </Link>
-          <Link to="/albums" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#F59E0B]/50 transition-all group">
+          <Link to="/albums" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#F59E0B]/50 transition-all group">
             <div className="w-10 h-10 rounded-lg bg-[#F59E0B]/10 flex items-center justify-center group-hover:bg-[#F59E0B]/20 transition-colors">
               <Disc3 className="w-5 h-5 text-[#F59E0B]" />
             </div>
-            <span className="font-medium text-[#F1F1F1]">Add Album</span>
+            <span className="text-xs font-medium text-[#F1F1F1]">Albums</span>
           </Link>
-          <Link to="/users" className="flex items-center gap-3 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#3B82F6]/50 transition-all group">
+          <Link to="/users" className="flex flex-col items-center gap-2 p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl hover:border-[#3B82F6]/50 transition-all group">
             <div className="w-10 h-10 rounded-lg bg-[#3B82F6]/10 flex items-center justify-center group-hover:bg-[#3B82F6]/20 transition-colors">
               <Users className="w-5 h-5 text-[#3B82F6]" />
             </div>
-            <span className="font-medium text-[#F1F1F1]">Add User</span>
+            <span className="text-xs font-medium text-[#F1F1F1]">Users</span>
           </Link>
         </div>
       </div>
