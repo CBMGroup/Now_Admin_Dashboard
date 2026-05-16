@@ -79,20 +79,20 @@ export function CategoryDashboard({ type, title, subtitle, onNavigate }: Categor
         />
       </div>
 
-      {/* category specific info */}
+      {/* category specific info - Placeholder for real metrics */}
       <div className="bg-[#1A1A1A] rounded-2xl border border-[#2A2A2A] p-8">
          <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-[#F1F1F1]">System Overview</h2>
-            <div className="flex items-center gap-2 text-sm font-medium text-[#22C55E]">
-                <TrendingUp className="w-4 h-4" />
-                <span>+14% Growth</span>
+            <div className="flex items-center gap-2 text-sm font-medium text-[#A3A3A3]">
+                <Plus className="w-4 h-4" />
+                <span>Live Data Coming Soon</span>
             </div>
          </div>
          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatItem label={`Total ${config.item}s`} value="1,284" />
-            <StatItem label={`Total ${config.creator}s`} value="42" />
-            {config.collection && <StatItem label={`Total ${config.collection}s`} value="156" />}
-            <StatItem label="Total Streams" value="84.2K" />
+            <StatItem label={`Active ${config.item}s`} value="---" />
+            <StatItem label={`Total ${config.creator}s`} value="---" />
+            {config.collection && <StatItem label={`Total ${config.collection}s`} value="---" />}
+            <StatItem label="Total Streams" value="---" />
          </div>
       </div>
     </div>
